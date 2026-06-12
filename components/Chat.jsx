@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect, useCallback } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useChat } from '@ai-sdk/react'
 
 export default function Chat() {
@@ -21,12 +21,12 @@ export default function Chat() {
     inputRef.current?.focus()
   }, [])
 
-  const handleSubmit = useCallback((e) => {
+  const handleSubmit = (e) => {
     e?.preventDefault()
     if (!input.trim() || isLoading) return
     sendMessage({ text: input })
     setInput('')
-  }, [input, isLoading, sendMessage])
+  }
 
   return (
     <div className="chat-container">
@@ -87,7 +87,7 @@ export default function Chat() {
 
         {error && (
           <div className="chat-error">
-            Something went wrong. Please check your API key and try again.
+            {error.message || 'Something went wrong. Please try again.'}
           </div>
         )}
 
