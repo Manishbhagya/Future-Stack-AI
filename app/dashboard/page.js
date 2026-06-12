@@ -1,5 +1,5 @@
 import { auth } from '@clerk/nextjs/server'
-import { createClient } from '@/lib/supabase/server'
+import { createClient } from '../../lib/supabase/server'
 import { UserButton } from '@clerk/nextjs'
 
 export default async function DashboardPage() {

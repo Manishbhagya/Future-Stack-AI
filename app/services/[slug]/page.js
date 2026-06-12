@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import EnquiryForm from '@/components/EnquiryForm'
+import EnquiryForm from '../../../components/EnquiryForm'
 
 const services = {
   'ai-chatbots': {
