@@ -135,6 +135,12 @@ header {
   line-height: 1.6;
 }
 
+.service-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
 /* Contact Section */
 .contact {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
