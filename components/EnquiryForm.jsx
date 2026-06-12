@@ -88,7 +88,7 @@ export default function EnquiryForm({ serviceSlug, serviceTitle }) {
         />
       </div>
       {error && <div className="enquiry-error">{error}</div>}
-      <button type="submit" className="cta-button" disabled={submitting}>
+      <button type="submit" className="btn-primary" disabled={submitting}>
         {submitting ? 'Submitting...' : 'Submit Enquiry'}
       </button>
     </form>
