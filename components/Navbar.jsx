@@ -31,6 +31,24 @@ export default function Navbar() {
           >
             Services
           </Link>
+          <Link
+            href="/about"
+            className={`nav-link ${isActive('/about') ? 'active' : ''}`}
+          >
+            About
+          </Link>
+          <Link
+            href="/blog"
+            className={`nav-link ${isActive('/blog') ? 'active' : ''}`}
+          >
+            Blog
+          </Link>
+          <Link
+            href="/pricing"
+            className={`nav-link ${isActive('/pricing') ? 'active' : ''}`}
+          >
+            Pricing
+          </Link>
           <Link href="/#contact" className="nav-link">Contact</Link>
           {isSignedIn ? (
             <>
