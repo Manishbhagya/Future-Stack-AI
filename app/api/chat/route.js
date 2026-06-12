@@ -10,17 +10,32 @@ const openrouter = createOpenAI({
   },
 })
 
+const MODEL = process.env.OPENROUTER_MODEL || 'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free'
+
 export async function POST(req) {
-  const { messages } = await req.json()
+  let body
+  try {
+    body = await req.json()
+  } catch {
+    return new Response(JSON.stringify({ error: 'Invalid JSON body' }), { status: 400 })
+  }
+
+  const { messages } = body
+  if (!messages || !Array.isArray(messages) || messages.length === 0) {
+    return new Response(JSON.stringify({ error: 'messages array is required' }), { status: 400 })
+  }
 
   const coreMessages = messages.map((m) => ({
     role: m.role,
-    content: m.content || m.parts?.map((p) => p.text || p.image || '').join('') || '',
+    content: m.content || m.parts?.filter((p) => p.type === 'text').map((p) => p.text).join('') || '',
   }))
 
-  const result = streamText({
-    model: openrouter.chat('nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free'),
-    system: `You are a helpful AI assistant for Future Stack AI — a company that builds AI-native systems for businesses.
+  let result
+  try {
+    result = streamText({
+      model: openrouter.chat(MODEL),
+      abortSignal: req.signal,
+      system: `You are a helpful AI assistant for Future Stack AI — a company that builds AI-native systems for businesses.
 
 Your expertise covers:
 - AI Chatbots (conversational AI, customer support, lead gen, WhatsApp integration)
@@ -31,8 +46,11 @@ Your expertise covers:
 - AI Automation (RPA, workflow optimization)
 
 Be concise, friendly, and knowledgeable. If asked about something outside these areas, politely redirect to the company's scope. Keep responses under 3 paragraphs.`,
-    messages: coreMessages,
-  })
+      messages: coreMessages,
+    })
+  } catch (e) {
+    return new Response(JSON.stringify({ error: e.message }), { status: 500 })
+  }
 
   const stream = new ReadableStream({
     async start(controller) {
@@ -41,22 +59,29 @@ Be concise, friendly, and knowledgeable. If asked about something outside these 
         controller.enqueue(encoder.encode(`data: ${JSON.stringify(data)}\n\n`))
       }
 
-      for await (const part of result.fullStream) {
-        if (part.type === 'text-start') {
-          sendJson({ type: 'text-start', id: part.id })
-        } else if (part.type === 'text-delta') {
-          sendJson({ type: 'text-delta', id: part.id, delta: part.text })
-        } else if (part.type === 'text-end') {
-          sendJson({ type: 'text-end', id: part.id })
-        } else if (part.type === 'error') {
-          sendJson({ type: 'error', errorText: part.error })
-        } else if (part.type === 'finish') {
-          sendJson({ type: 'finish', finishReason: part.finishReason })
+      try {
+        for await (const part of result.fullStream) {
+          if (req.signal.aborted) break
+          if (part.type === 'text-start') {
+            sendJson({ type: 'text-start', id: part.id })
+          } else if (part.type === 'text-delta') {
+            sendJson({ type: 'text-delta', id: part.id, delta: part.text })
+          } else if (part.type === 'text-end') {
+            sendJson({ type: 'text-end', id: part.id })
+          } else if (part.type === 'error') {
+            sendJson({ type: 'error', errorText: part.error })
+          } else if (part.type === 'finish') {
+            sendJson({ type: 'finish', finishReason: part.finishReason })
+          }
         }
+      } catch {
+        // stream interrupted by client disconnect
       }
 
-      controller.enqueue(encoder.encode('data: [DONE]\n\n'))
-      controller.close()
+      if (!req.signal.aborted) {
+        controller.enqueue(encoder.encode('data: [DONE]\n\n'))
+        controller.close()
+      }
     },
   })
 
