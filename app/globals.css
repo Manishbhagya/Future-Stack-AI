@@ -251,3 +251,36 @@ footer {
   border-radius: 5px;
   margin-bottom: 1rem;
 }
+
+.service-detail {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.service-detail-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.service-icon-large {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.service-detail-desc {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.service-detail-body {
+  margin-bottom: 3rem;
+  line-height: 1.8;
+}
+
+.service-enquiry-section {
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 2rem;
+}
