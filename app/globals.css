@@ -180,6 +180,14 @@ footer {
 }
 
 /* Responsive */
+.auth-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 200px);
+  padding: 2rem;
+}
+
 @media (max-width: 768px) {
   .nav-container {
     flex-direction: column;
