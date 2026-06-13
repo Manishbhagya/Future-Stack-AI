@@ -679,6 +679,14 @@ export default function Home() {
               <FluidButton href="/services">Explore Services</FluidButton>
               <BookCallButton href="/contact">Book a 15-min talk</BookCallButton>
             </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.65, ease: [0.21, 0.47, 0.32, 0.98] }}
+              style={{ display: 'flex', justifyContent: 'flex-start', marginTop: 24 }}
+            >
+              <SocialProofCardWrapper />
+            </motion.div>
           </div>
           <div className="hero-visual" aria-hidden="true">
             <div className="hero-orb" />
@@ -702,11 +710,6 @@ export default function Home() {
           <FadeIn>
             <div className="trust-bar-layout">
               <LogoGarden />
-            </div>
-          </FadeIn>
-          <FadeIn delay={0.2}>
-            <div className="trust-bar-proof">
-              <SocialProofCardWrapper />
             </div>
           </FadeIn>
         </div>
