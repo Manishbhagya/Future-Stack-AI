@@ -136,10 +136,12 @@ function LogoGarden() {
   const speed = 40
 
   useEffect(() => {
+    let mounted = true
     const track = trackRef.current
     if (!track) return
 
     const tick = () => {
+      if (!mounted) return
       if (isHovered || isDragging) {
         animRef.current = requestAnimationFrame(tick)
         return
@@ -151,10 +153,10 @@ function LogoGarden() {
       track.dataset.x = currentX
       track.style.transform = `translate3d(${currentX}px, 0, 0)`
       setProgress(-currentX / totalW)
-      animRef.current = requestAnimationFrame(tick)
+      if (mounted) animRef.current = requestAnimationFrame(tick)
     }
     animRef.current = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(animRef.current)
+    return () => { mounted = false; cancelAnimationFrame(animRef.current) }
   }, [isHovered, isDragging])
 
   const handleBar = (e) => {
@@ -266,47 +268,44 @@ function ProgressSlideshow() {
   const [active, setActive] = useState(0)
   const [progress, setProgress] = useState(0)
   const [isHovered, setIsHovered] = useState(false)
-  const intervalRef = useRef(null)
-  const progressRef = useRef(null)
+  const progressRef = useRef(0)
+  const activeRef = useRef(0)
   const startTimeRef = useRef(null)
+  const rafRef = useRef(null)
 
   const duration = 4000
 
   useEffect(() => {
+    let mounted = true
+
     const tick = () => {
+      if (!mounted) return
+      if (isHovered) {
+        rafRef.current = requestAnimationFrame(tick)
+        return
+      }
       if (!startTimeRef.current) startTimeRef.current = Date.now()
       const elapsed = Date.now() - startTimeRef.current
       const pct = Math.min(elapsed / duration, 1)
-      setProgress(pct)
+      if (pct !== progressRef.current) {
+        progressRef.current = pct
+        setProgress(pct)
+      }
       if (pct >= 1) {
-        setActive(a => (a + 1) % nextGenFeatures.length)
+        const next = (activeRef.current + 1) % nextGenFeatures.length
+        activeRef.current = next
+        setActive(next)
         startTimeRef.current = Date.now()
+        progressRef.current = 0
         setProgress(0)
       }
+      if (mounted) rafRef.current = requestAnimationFrame(tick)
     }
 
-    intervalRef.current = setInterval(tick, 16)
-    return () => clearInterval(intervalRef.current)
-  }, [])
-
-  useEffect(() => {
-    if (isHovered) {
-      if (intervalRef.current) clearInterval(intervalRef.current)
-    } else {
-      startTimeRef.current = Date.now() - progress * duration
-      intervalRef.current = setInterval(() => {
-        const elapsed = Date.now() - startTimeRef.current
-        const pct = Math.min(elapsed / duration, 1)
-        setProgress(pct)
-        if (pct >= 1) {
-          setActive(a => (a + 1) % nextGenFeatures.length)
-          startTimeRef.current = Date.now()
-          setProgress(0)
-        }
-      }, 16)
-    }
-    return () => { if (intervalRef.current) clearInterval(intervalRef.current) }
-  }, [isHovered, active])
+    startTimeRef.current = Date.now() - progressRef.current * duration
+    rafRef.current = requestAnimationFrame(tick)
+    return () => { mounted = false; if (rafRef.current) cancelAnimationFrame(rafRef.current) }
+  }, [isHovered])
 
   const f = nextGenFeatures[active]
   const color = featureColors[active % featureColors.length]
