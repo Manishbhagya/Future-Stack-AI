@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState, useEffect } from 'react'
-import { motion, useInView } from 'framer-motion'
+import { motion, AnimatePresence, useInView, useAnimationFrame, useMotionValue } from 'framer-motion'
 import Link from 'next/link'
 
 function FadeIn({ children, delay = 0 }) {
@@ -44,6 +44,36 @@ const clients = [
   'TechCorp', 'DataFlow', 'CloudBase', 'NeuralSys',
   'AxiomAI', 'Stratify', 'PulseIQ', 'Vantage',
 ]
+
+function ClientCarousel() {
+  const x = useMotionValue(0)
+  const [isHovered, setIsHovered] = useState(false)
+
+  useAnimationFrame((_, delta) => {
+    const speed = isHovered ? 0.3 : 1
+    const movement = speed * -1 * (delta / 16)
+    const totalWidth = clients.length * 160
+    let newX = x.get() + movement
+    if (newX <= -totalWidth) newX += totalWidth
+    x.set(newX)
+  })
+
+  const all = [...clients, ...clients, ...clients]
+
+  return (
+    <div
+      className="client-carousel"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <motion.div className="client-carousel-track" style={{ x }}>
+        {all.map((name, i) => (
+          <span key={`${name}-${i}`} className="client-carousel-logo">{name}</span>
+        ))}
+      </motion.div>
+    </div>
+  )
+}
 
 const testimonials = [
   {
@@ -237,6 +267,98 @@ function BookCallButton({ href, children }) {
   )
 }
 
+const testimonialData = [
+  {
+    text: 'Future Stack AI completely transformed how our team operates. The AI chatbot we built together reduced our support tickets by 60%.',
+    name: 'Emily Ray',
+    role: 'UX Designer',
+    initials: 'ER',
+    color: '#D4A853',
+  },
+  {
+    text: 'We launched three AI-powered features in one quarter after working with Future Stack. Their ML models are incredibly accurate.',
+    name: 'Sofia Delgado',
+    role: 'Product Manager, NovaTech',
+    initials: 'SD',
+    color: '#7C3AED',
+  },
+  {
+    text: 'As a small agency, time is everything. Future Stack helped us automate client reporting — now we deliver projects 2x faster.',
+    name: 'Ryan Chen',
+    role: 'Creative Director',
+    initials: 'RC',
+    color: '#0EA5E9',
+  },
+  {
+    text: 'The cloud infrastructure they built for us handles 10x our previous traffic with zero downtime. Absolutely rock solid.',
+    name: 'Jessica Moore',
+    role: 'Head of Operations',
+    initials: 'JM',
+    color: '#10B981',
+  },
+]
+
+function TabsSlider() {
+  const [active, setActive] = useState(0)
+  const [direction, setDirection] = useState(1)
+
+  useEffect(() => {
+    function handleKey(e) {
+      if (e.key === 'ArrowLeft') { e.preventDefault(); setDirection(-1); setActive(a => (a - 1 + testimonialData.length) % testimonialData.length) }
+      if (e.key === 'ArrowRight') { e.preventDefault(); setDirection(1); setActive(a => (a + 1) % testimonialData.length) }
+    }
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [])
+
+  const t = testimonialData[active]
+
+  return (
+    <div className="tabs-slider">
+      <div className="tabs-slider-card-wrap">
+        <AnimatePresence mode="wait" custom={direction}>
+          <motion.div
+            key={active}
+            className="tabs-slider-card"
+            custom={direction}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+          >
+            <p className="tabs-slider-text">&ldquo;{t.text}&rdquo;</p>
+            <div className="tabs-slider-author">
+              <strong>{t.name}</strong>
+              <span>{t.role}</span>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+      <div className="tabs-slider-avatars">
+        {testimonialData.map((item, i) => (
+          <motion.button
+            key={i}
+            className={`tabs-slider-avatar ${active === i ? 'active' : ''}`}
+            onClick={() => { setDirection(i > active ? 1 : -1); setActive(i) }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            style={{
+              borderColor: active === i ? item.color : 'transparent',
+              borderWidth: 3,
+              opacity: active === i ? 1 : 0.4,
+            }}
+            aria-label={`View testimonial ${i + 1}`}
+          >
+            <div className="tabs-slider-avatar-inner" style={{ background: item.color }}>
+              {item.initials}
+            </div>
+          </motion.button>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 const pricingTiers = ['Starter', 'Professional', 'Enterprise']
 
 function DynamicToggle({ active, onChange }) {
@@ -260,7 +382,6 @@ function DynamicToggle({ active, onChange }) {
 }
 
 export default function Home() {
-  const [activeTestimonial, setActiveTestimonial] = useState(0)
   const [pricingTier, setPricingTier] = useState(1)
 
   return (
@@ -314,13 +435,7 @@ export default function Home() {
 
       <section className="client-section">
         <div className="section-container">
-          <div className="client-marquee">
-            <div className="client-track">
-              {[...clients, ...clients].map((name, i) => (
-                <span key={i} className="client-logo">{name}</span>
-              ))}
-            </div>
-          </div>
+          <ClientCarousel />
         </div>
       </section>
 
@@ -441,33 +556,12 @@ export default function Home() {
 
       <section className="testimonial-section">
         <div className="section-container">
-          <div className="testimonial-layout">
-            <FadeIn>
-              <h2 className="section-title">Loved by teams that build with us</h2>
-            </FadeIn>
-            <div className="testimonial-main">
-              <div className="testimonial-avatars">
-                {testimonials.map((t, i) => (
-                  <button
-                    key={i}
-                    className={`testimonial-avatar-btn ${activeTestimonial === i ? 'active' : ''}`}
-                    onClick={() => setActiveTestimonial(i)}
-                  >
-                    {t.initials}
-                  </button>
-                ))}
-              </div>
-              <FadeIn key={activeTestimonial}>
-                <div className="testimonial-card">
-                  <p className="testimonial-quote">&ldquo;{testimonials[activeTestimonial].quote}&rdquo;</p>
-                  <div className="testimonial-author">
-                    <strong>{testimonials[activeTestimonial].name}</strong>
-                    <span>{testimonials[activeTestimonial].role}</span>
-                  </div>
-                </div>
-              </FadeIn>
-            </div>
-          </div>
+          <FadeIn>
+            <h2 className="section-title section-title-center">Loved by teams that build with us</h2>
+          </FadeIn>
+          <FadeIn delay={0.1}>
+            <TabsSlider />
+          </FadeIn>
         </div>
       </section>
 
