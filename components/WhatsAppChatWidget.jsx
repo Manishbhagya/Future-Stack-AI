@@ -31,9 +31,9 @@ function formatTime(date) {
   return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })
 }
 
-export default function WhatsAppChatWidget({ show, onClose, phoneNumber = '1234567890' }) {
+export default function WhatsAppChatWidget({ show, onClose, phoneNumber = '9348544857' }) {
   const timestampRef = useRef(null)
-  const preFilledMessage = 'Hello! I would like to know more.'
+  const preFilledMessage = 'Hi Future Stack AI! I\'m interested in your AI services. Can you tell me more?'
   const status = getBusinessStatus()
 
   useEffect(() => {
