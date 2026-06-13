@@ -411,7 +411,7 @@ function FAQItem({ number, question, answer }) {
 }
 
 function TypewriterEffect() {
-  const words = ['Intelligence', 'Automation', 'Innovation', 'Efficiency', 'Growth']
+  const words = ['Intelligence', 'Automation', 'Growth']
   const [displayed, setDisplayed] = useState('')
   const [wordIndex, setWordIndex] = useState(0)
   const [charIndex, setCharIndex] = useState(0)
@@ -681,10 +681,7 @@ export default function Home() {
           </div>
           <div className="hero-visual" aria-hidden="true">
             <div className="hero-orb" />
-            <div className="hero-orb-secondary" />
             <div className="hero-grid" />
-            <div className="hero-glyph">FSA</div>
-            <div className="hero-glyph-accent">✦</div>
           </div>
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: 48, height: 48 }}>
@@ -697,7 +694,14 @@ export default function Home() {
             sectionName="services"
           />
         </div>
-        <LogoGarden />
+      </section>
+
+      <section className="trust-bar-section">
+        <div className="section-container">
+          <FadeIn>
+            <LogoGarden />
+          </FadeIn>
+        </div>
       </section>
 
       <section id="services" className="services-section">
@@ -760,34 +764,15 @@ export default function Home() {
               </FadeIn>
             ))}
           </div>
-        </div>
-      </section>
-
-      <section className="integration-section">
-        <div className="section-container">
-          <FadeIn>
-            <span className="section-label">/ Integrations</span>
-            <h2 className="section-title section-title-center">One platform, unlimited integrations</h2>
-            <p className="section-desc section-desc-center">
-              Connect with the tools you already use. Our platform integrates seamlessly with your existing stack.
-            </p>
-          </FadeIn>
-          <div className="integration-grid">
-            {integrations.map((item, i) => (
-              <FadeIn key={i} delay={0.06 * i}>
-                <div className="integration-card">
-                  <span className="integration-icon">{item.icon}</span>
-                  <span className="integration-name">{item.name}</span>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
-          <FadeIn>
-            <div style={{ textAlign: 'center', marginTop: 36 }}>
-              <Link href="/contact" className="btn-outline">
-                View all integrations
-                <span className="btn-arrow">→</span>
-              </Link>
+          <FadeIn delay={0.3}>
+            <div className="integration-row">
+              <span className="integration-row-label">Powered by</span>
+              <div className="integration-row-logos">
+                {integrations.map((item, i) => (
+                  <span key={i} className="integration-row-chip">{item.icon} {item.name}</span>
+                ))}
+              </div>
+              <Link href="/contact" className="integration-row-link">View all →</Link>
             </div>
           </FadeIn>
         </div>
@@ -801,17 +786,6 @@ export default function Home() {
           </FadeIn>
           <FadeIn delay={0.1}>
             <ProgressSlideshow />
-          </FadeIn>
-        </div>
-      </section>
-
-      <section className="testimonial-section">
-        <div className="section-container">
-          <FadeIn>
-            <h2 className="section-title section-title-center">Loved by teams that build with us</h2>
-          </FadeIn>
-          <FadeIn delay={0.1}>
-            <TabsSlider />
           </FadeIn>
         </div>
       </section>
@@ -883,6 +857,17 @@ export default function Home() {
               </div>
             </FadeIn>
           </div>
+        </div>
+      </section>
+
+      <section className="testimonial-section">
+        <div className="section-container">
+          <FadeIn>
+            <h2 className="section-title section-title-center">Loved by teams that build with us</h2>
+          </FadeIn>
+          <FadeIn delay={0.1}>
+            <TabsSlider />
+          </FadeIn>
         </div>
       </section>
 
