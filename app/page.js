@@ -5,6 +5,7 @@ import { motion, AnimatePresence, useInView } from 'framer-motion'
 import Link from 'next/link'
 import ScrollIndicatorWrapper from '../components/ScrollIndicatorWrapper'
 import XOrbitWrapper from '../components/XOrbitWrapper'
+import SocialProofCardWrapper from '../components/SocialProofCardWrapper'
 
 function FadeIn({ children, delay = 0 }) {
   const ref = useRef(null)
@@ -699,7 +700,14 @@ export default function Home() {
       <section className="trust-bar-section">
         <div className="section-container">
           <FadeIn>
-            <LogoGarden />
+            <div className="trust-bar-layout">
+              <LogoGarden />
+            </div>
+          </FadeIn>
+          <FadeIn delay={0.2}>
+            <div className="trust-bar-proof">
+              <SocialProofCardWrapper />
+            </div>
           </FadeIn>
         </div>
       </section>

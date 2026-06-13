@@ -3828,6 +3828,15 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--bg-dark);
 }
 
+.trust-bar-layout {
+  margin-bottom: 24px;
+}
+
+.trust-bar-proof {
+  display: flex;
+  justify-content: center;
+}
+
 .integration-row {
   display: flex;
   align-items: center;
