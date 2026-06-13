@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState, useEffect } from 'react'
-import { motion, AnimatePresence, useInView, useAnimationFrame, useMotionValue } from 'framer-motion'
+import { motion, AnimatePresence, useInView } from 'framer-motion'
 import Link from 'next/link'
 
 function FadeIn({ children, delay = 0 }) {
@@ -40,37 +40,86 @@ const services = [
   },
 ]
 
-const clients = [
+
+
+const logoLogos = [
   'TechCorp', 'DataFlow', 'CloudBase', 'NeuralSys',
   'AxiomAI', 'Stratify', 'PulseIQ', 'Vantage',
+  'NovaTech', 'HexCore', 'BrightAI', 'FusionX',
 ]
 
-function ClientCarousel() {
-  const x = useMotionValue(0)
+function LogoGarden() {
+  const trackRef = useRef(null)
+  const barRef = useRef(null)
   const [isHovered, setIsHovered] = useState(false)
+  const [isDragging, setIsDragging] = useState(false)
+  const animRef = useRef(null)
 
-  useAnimationFrame((_, delta) => {
-    const speed = isHovered ? 0.3 : 1
-    const movement = speed * -1 * (delta / 16)
-    const totalWidth = clients.length * 160
-    let newX = x.get() + movement
-    if (newX <= -totalWidth) newX += totalWidth
-    x.set(newX)
-  })
+  const all = [...logoLogos, ...logoLogos, ...logoLogos]
 
-  const all = [...clients, ...clients, ...clients]
+  const speed = 40
+
+  useEffect(() => {
+    const track = trackRef.current
+    if (!track) return
+
+    const tick = () => {
+      if (isHovered || isDragging) {
+        animRef.current = requestAnimationFrame(tick)
+        return
+      }
+      const dx = speed * (16 / 1000)
+      let currentX = parseFloat(track.dataset.x || '0') - dx
+      const totalW = logoLogos.length * 140
+      if (currentX <= -totalW) currentX += totalW
+      track.dataset.x = currentX
+      track.style.transform = `translate3d(${currentX}px, 0, 0)`
+      animRef.current = requestAnimationFrame(tick)
+    }
+    animRef.current = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(animRef.current)
+  }, [isHovered, isDragging])
+
+  const handleBar = (e) => {
+    const bar = barRef.current
+    if (!bar) return
+    const rect = bar.getBoundingClientRect()
+    const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width))
+    const totalW = logoLogos.length * 140
+    const track = trackRef.current
+    if (!track) return
+    track.dataset.x = -pct * totalW
+    track.style.transform = `translate3d(${-pct * totalW}px, 0, 0)`
+  }
+
+  const onBarMouseDown = (e) => {
+    setIsDragging(true)
+    handleBar(e)
+    const onMove = (ev) => handleBar(ev)
+    const onUp = () => { setIsDragging(false); document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp) }
+    document.addEventListener('mousemove', onMove)
+    document.addEventListener('mouseup', onUp)
+  }
 
   return (
-    <div
-      className="client-carousel"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <motion.div className="client-carousel-track" style={{ x }}>
-        {all.map((name, i) => (
-          <span key={`${name}-${i}`} className="client-carousel-logo">{name}</span>
-        ))}
-      </motion.div>
+    <div className="logo-garden">
+      <div className="logo-garden-fade">
+        <div
+          ref={trackRef}
+          className="logo-garden-track"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          {all.map((name, i) => (
+            <span key={`${name}-${i}`} className="logo-garden-item">{name}</span>
+          ))}
+        </div>
+      </div>
+      <div className="logo-garden-bar" ref={barRef} onMouseDown={onBarMouseDown}>
+        <div className="logo-garden-bar-track">
+          <div className="logo-garden-bar-thumb" />
+        </div>
+      </div>
     </div>
   )
 }
@@ -125,6 +174,113 @@ const nextGenFeatures = [
   { icon: '📤', title: 'One-click deployment', desc: 'Deploy models, updates, and new features with a single click.' },
   { icon: '🔒', title: 'Enterprise security', desc: 'End-to-end encryption, SOC 2 compliance, and role-based access control.' },
 ]
+
+const featureColors = [
+  { from: '#6366f1', to: '#8b5cf6' },
+  { from: '#06b6d4', to: '#3b82f6' },
+  { from: '#f59e0b', to: '#ef4444' },
+  { from: '#10b981', to: '#059669' },
+  { from: '#8b5cf6', to: '#ec4899' },
+  { from: '#f97316', to: '#eab308' },
+]
+
+function ProgressSlideshow() {
+  const [active, setActive] = useState(0)
+  const [progress, setProgress] = useState(0)
+  const [isHovered, setIsHovered] = useState(false)
+  const intervalRef = useRef(null)
+  const progressRef = useRef(null)
+  const startTimeRef = useRef(null)
+
+  const duration = 4000
+
+  useEffect(() => {
+    const tick = () => {
+      if (!startTimeRef.current) startTimeRef.current = Date.now()
+      const elapsed = Date.now() - startTimeRef.current
+      const pct = Math.min(elapsed / duration, 1)
+      setProgress(pct)
+      if (pct >= 1) {
+        setActive(a => (a + 1) % nextGenFeatures.length)
+        startTimeRef.current = Date.now()
+        setProgress(0)
+      }
+    }
+
+    intervalRef.current = setInterval(tick, 16)
+    return () => clearInterval(intervalRef.current)
+  }, [])
+
+  useEffect(() => {
+    if (isHovered) {
+      if (intervalRef.current) clearInterval(intervalRef.current)
+    } else {
+      startTimeRef.current = Date.now() - progress * duration
+      intervalRef.current = setInterval(() => {
+        const elapsed = Date.now() - startTimeRef.current
+        const pct = Math.min(elapsed / duration, 1)
+        setProgress(pct)
+        if (pct >= 1) {
+          setActive(a => (a + 1) % nextGenFeatures.length)
+          startTimeRef.current = Date.now()
+          setProgress(0)
+        }
+      }, 16)
+    }
+    return () => { if (intervalRef.current) clearInterval(intervalRef.current) }
+  }, [isHovered, active])
+
+  const f = nextGenFeatures[active]
+  const color = featureColors[active % featureColors.length]
+
+  return (
+    <div
+      className="progress-slideshow"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className="progress-slideshow-cards">
+        {nextGenFeatures.map((item, i) => (
+          <button
+            key={i}
+            className={`progress-slideshow-card ${active === i ? 'active' : ''}`}
+            onClick={() => { setActive(i); startTimeRef.current = Date.now(); setProgress(0) }}
+          >
+            <div className="progress-slideshow-card-header">
+              <span className="progress-slideshow-card-icon">{item.icon}</span>
+              <div>
+                <strong className="progress-slideshow-card-title">{item.title}</strong>
+                <p className="progress-slideshow-card-desc">{item.desc}</p>
+              </div>
+            </div>
+            {active === i && (
+              <div className="progress-slideshow-bar-track">
+                <div className="progress-slideshow-bar-fill" style={{ width: `${progress * 100}%` }} />
+              </div>
+            )}
+          </button>
+        ))}
+      </div>
+      <div className="progress-slideshow-visual">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={active}
+            className="progress-slideshow-visual-inner"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+            style={{ background: `linear-gradient(135deg, ${color.from}, ${color.to})` }}
+          >
+            <span className="progress-slideshow-visual-icon">{f.icon}</span>
+            <h3 className="progress-slideshow-visual-title">{f.title}</h3>
+            <p className="progress-slideshow-visual-desc">{f.desc}</p>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </div>
+  )
+}
 
 const solutions = [
   'Startups & Scaleups',
@@ -431,12 +587,7 @@ export default function Home() {
             <div className="hero-glyph-accent">✦</div>
           </div>
         </div>
-      </section>
-
-      <section className="client-section">
-        <div className="section-container">
-          <ClientCarousel />
-        </div>
+        <LogoGarden />
       </section>
 
       <section id="services" className="services-section">
@@ -540,17 +691,9 @@ export default function Home() {
             <span className="section-label" style={{ color: '#D4A853' }}>/ Features</span>
             <h2 className="benefits-title-light">Power up your workflow with next-gen features</h2>
           </FadeIn>
-          <div className="benefits-grid">
-            {nextGenFeatures.map((feature, i) => (
-              <FadeIn key={i} delay={0.06 * i}>
-                <div className="benefits-card">
-                  <div className="benefits-card-icon">{feature.icon}</div>
-                  <h3 className="benefits-card-title">{feature.title}</h3>
-                  <p className="benefits-card-desc">{feature.desc}</p>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
+          <FadeIn delay={0.1}>
+            <ProgressSlideshow />
+          </FadeIn>
         </div>
       </section>
 
