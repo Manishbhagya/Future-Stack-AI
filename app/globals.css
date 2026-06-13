@@ -1013,6 +1013,54 @@ h1, h2, h3, h4, h5, h6 {
   transform: translateX(4px);
 }
 
+.service-result-badge {
+  display: inline-block;
+  margin-top: 14px;
+  font-family: var(--font-heading), sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 100px;
+  background: rgba(212, 168, 83, 0.1);
+  align-self: flex-start;
+}
+
+/* ============== USE CASE TABS ============== */
+
+.use-case-tabs {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.use-case-tab {
+  font-family: var(--font-heading), sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 8px 24px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: var(--bg-white);
+  color: var(--text-tertiary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.use-case-tab:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.use-case-tab.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
 /* ============== HOW IT WORKS ============== */
 
 .process-section {
@@ -1059,6 +1107,24 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 0.88rem;
   color: var(--text-secondary);
   line-height: 1.6;
+}
+
+.process-industry-note {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  font-size: 0.84rem;
+  color: var(--accent);
+  line-height: 1.5;
+  display: flex;
+  gap: 6px;
+  font-style: italic;
+}
+
+.process-industry-arrow {
+  flex-shrink: 0;
+  font-style: normal;
+  opacity: 0.6;
 }
 
 /* ============== FAQ ============== */

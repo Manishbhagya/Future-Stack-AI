@@ -24,19 +24,91 @@ const services = [
     slug: 'ai-chatbots',
     icon: '🤖',
     title: 'AI Chatbots',
-    description: 'Intelligent conversational AI for customer support, lead generation, and engagement.',
+    industries: {
+      saas: {
+        desc: 'AI-powered support that resolves 60% of tickets instantly, cutting response time from hours to seconds.',
+        result: '60% faster support',
+      },
+      agency: {
+        desc: 'White-label chatbots that handle client onboarding, FAQs, and lead qualification around the clock.',
+        result: '2x lead conversion',
+      },
+      enterprise: {
+        desc: 'Enterprise-grade conversational AI with SSO, audit logs, and custom knowledge base integration.',
+        result: '99.9% uptime',
+      },
+    },
   },
   {
     slug: 'machine-learning',
     icon: '📊',
     title: 'Machine Learning',
-    description: 'Custom ML models for predictions, pattern recognition, and data-driven decisions.',
+    industries: {
+      saas: {
+        desc: 'Predictive models that analyze user behavior to reduce churn and surface personalized recommendations.',
+        result: '40% churn reduction',
+      },
+      agency: {
+        desc: 'Automated reporting and forecasting models that turn raw client data into actionable dashboards.',
+        result: '10x report speed',
+      },
+      enterprise: {
+        desc: 'Custom ML pipelines with real-time inference, A/B testing, and compliance-ready model governance.',
+        result: '3x revenue uplift',
+      },
+    },
   },
   {
     slug: 'web-development',
     icon: '💻',
     title: 'Web Development',
-    description: 'Modern, responsive web applications built with Next.js, React, and cutting-edge tech.',
+    industries: {
+      saas: {
+        desc: 'Blazing-fast Next.js apps with instant auth, real-time data, and seamless third-party integrations.',
+        result: '0.8s load time',
+      },
+      agency: {
+        desc: 'Multi-tenant site builders and CMS platforms that let agencies ship client sites in days, not weeks.',
+        result: '3x faster delivery',
+      },
+      enterprise: {
+        desc: 'Enterprise portals with Role-Based Access Control, SOC 2 compliance, and CI/CD pipelines.',
+        result: '5x team efficiency',
+      },
+    },
+  },
+]
+
+const processSteps = [
+  {
+    number: '01',
+    title: 'Discovery & Strategy',
+    desc: 'We learn about your business, goals, and challenges to define a clear roadmap for success.',
+    industryNote: {
+      saas: 'We map user onboarding funnels and identify where AI reduces churn.',
+      agency: 'We audit your delivery pipeline to find automation gaps.',
+      enterprise: 'We assess legacy systems and design a phased migration plan.',
+    },
+  },
+  {
+    number: '02',
+    title: 'Design & Development',
+    desc: 'Our team builds your solution using modern architectures with regular progress updates.',
+    industryNote: {
+      saas: 'We build with a micro-frontend architecture so your team can ship independently.',
+      agency: 'We create reusable component libraries that speed up your next client project.',
+      enterprise: 'We follow strict code review, security scanning, and compliance checkpoints.',
+    },
+  },
+  {
+    number: '03',
+    title: 'Deploy & Scale',
+    desc: 'We launch, monitor, and optimize — ensuring your system grows with your business.',
+    industryNote: {
+      saas: 'Auto-scaling infrastructure with zero-downtime deploys and usage-based billing.',
+      enterprise: 'Gradual rollout with feature flags, canary deploys, and dedicated SLAs.',
+      agency: 'White-glove handoff with documentation, training, and post-launch support.',
+    },
   },
 ]
 
@@ -519,6 +591,28 @@ function TabsSlider() {
   )
 }
 
+const industries = [
+  { key: 'saas', label: 'SaaS' },
+  { key: 'agency', label: 'Agency' },
+  { key: 'enterprise', label: 'Enterprise' },
+]
+
+function UseCaseTabs({ active, onChange }) {
+  return (
+    <div className="use-case-tabs">
+      {industries.map(ind => (
+        <button
+          key={ind.key}
+          className={`use-case-tab ${active === ind.key ? 'active' : ''}`}
+          onClick={() => onChange(ind.key)}
+        >
+          {ind.label}
+        </button>
+      ))}
+    </div>
+  )
+}
+
 const pricingTiers = ['Starter', 'Professional', 'Enterprise']
 
 function DynamicToggle({ active, onChange }) {
@@ -543,6 +637,7 @@ function DynamicToggle({ active, onChange }) {
 
 export default function Home() {
   const [pricingTier, setPricingTier] = useState(1)
+  const [activeIndustry, setActiveIndustry] = useState('saas')
 
   return (
     <>
@@ -603,23 +698,29 @@ export default function Home() {
               Everything you need to build, deploy, and scale intelligent systems — all in a single, integrated platform.
             </p>
           </FadeIn>
+          <FadeIn delay={0.1}>
+            <UseCaseTabs active={activeIndustry} onChange={setActiveIndustry} />
+          </FadeIn>
           <div className="feature-grid">
-            {services.map((service, i) => (
-              <FadeIn key={service.slug} delay={0.1 * i}>
-                <Link href={`/services/${service.slug}`} className="feature-card">
-                  <div className="feature-image-wrap">
-                    <div className="feature-image-placeholder">
-                      <span>{service.icon}</span>
+            {services.map((service, i) => {
+              const ind = service.industries[activeIndustry]
+              return (
+                <FadeIn key={service.slug} delay={0.1 * i}>
+                  <Link href={`/services/${service.slug}`} className="feature-card">
+                    <div className="feature-image-wrap">
+                      <div className="feature-image-placeholder">
+                        <span>{service.icon}</span>
+                      </div>
                     </div>
-                  </div>
-                  <div className="feature-content">
-                    <h3>{service.title}</h3>
-                    <p>{service.description}</p>
-                    <span className="btn-arrow">→</span>
-                  </div>
-                </Link>
-              </FadeIn>
-            ))}
+                    <div className="feature-content">
+                      <h3>{service.title}</h3>
+                      <p>{ind.desc}</p>
+                      <span className="service-result-badge">{ind.result}</span>
+                    </div>
+                  </Link>
+                </FadeIn>
+              )
+            })}
           </div>
         </div>
       </section>
@@ -634,27 +735,19 @@ export default function Home() {
             </p>
           </FadeIn>
           <div className="process-steps">
-            <FadeIn delay={0.1}>
-              <div className="process-step">
-                <div className="step-number">01</div>
-                <h3 className="step-title">Discovery & Strategy</h3>
-                <p className="step-desc">We learn about your business, goals, and challenges to define a clear roadmap for success.</p>
-              </div>
-            </FadeIn>
-            <FadeIn delay={0.2}>
-              <div className="process-step">
-                <div className="step-number">02</div>
-                <h3 className="step-title">Design & Development</h3>
-                <p className="step-desc">Our team builds your solution using modern architectures with regular progress updates.</p>
-              </div>
-            </FadeIn>
-            <FadeIn delay={0.3}>
-              <div className="process-step">
-                <div className="step-number">03</div>
-                <h3 className="step-title">Deploy & Scale</h3>
-                <p className="step-desc">We launch, monitor, and optimize — ensuring your system grows with your business.</p>
-              </div>
-            </FadeIn>
+            {processSteps.map((step, i) => (
+              <FadeIn key={step.number} delay={0.1 * (i + 1)}>
+                <div className="process-step">
+                  <div className="step-number">{step.number}</div>
+                  <h3 className="step-title">{step.title}</h3>
+                  <p className="step-desc">{step.desc}</p>
+                  <div className="process-industry-note">
+                    <span className="process-industry-arrow">↳</span>
+                    <span>{step.industryNote[activeIndustry]}</span>
+                  </div>
+                </div>
+              </FadeIn>
+            ))}
           </div>
         </div>
       </section>
