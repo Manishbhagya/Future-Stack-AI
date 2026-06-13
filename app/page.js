@@ -4,6 +4,7 @@ import { useRef, useState, useEffect } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
 import Link from 'next/link'
 import ScrollIndicatorWrapper from '../components/ScrollIndicatorWrapper'
+import XOrbitWrapper from '../components/XOrbitWrapper'
 
 function FadeIn({ children, delay = 0 }) {
   const ref = useRef(null)
@@ -890,8 +891,27 @@ export default function Home() {
         <div className="section-container">
           <div className="solution-layout">
             <FadeIn>
-              <div className="solution-visual">
-                <div className="solution-placeholder">AI</div>
+              <div className="solution-visual" style={{ background: 'transparent', border: 'none', opacity: 1, height: 'auto', aspectRatio: '1/1', maxWidth: 400, margin: '0 auto' }}>
+                <XOrbitWrapper
+                  rotationDurationMs={20000}
+                  pulseColor="#D4A853"
+                  coreObjectBackground="rgba(212,168,83,0.1)"
+                  orbitObjectBackground="rgba(15,17,23,0.6)"
+                  orbitPathMode={false}
+                  orbitPathColor="rgba(212,168,83,0.15)"
+                  orbitIconSize={48}
+                  coreIconSize={80}
+                  orbitIconRadius={16}
+                  coreIconRadius={16}
+                  magneticEnabled={true}
+                  magneticPower={0.12}
+                  magneticArea={180}
+                  coreIconPadding={4}
+                  orbitIconPadding={6}
+                  orbitPathSpread={120}
+                  iconsAppearingDelayMs={150}
+                  LayerAnimation={true}
+                />
               </div>
             </FadeIn>
             <FadeIn delay={0.15}>
