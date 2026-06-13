@@ -6,6 +6,7 @@ import Link from 'next/link'
 import ScrollIndicatorWrapper from '../components/ScrollIndicatorWrapper'
 import XOrbitWrapper from '../components/XOrbitWrapper'
 import SocialProofCardWrapper from '../components/SocialProofCardWrapper'
+import ProgressStepsSectionWrapper from '../components/ProgressStepsSectionWrapper'
 
 function FadeIn({ children, delay = 0 }) {
   const ref = useRef(null)
@@ -760,21 +761,12 @@ export default function Home() {
               A streamlined process that takes your idea from discovery to production, with transparency at every stage.
             </p>
           </FadeIn>
-          <div className="process-steps">
-            {processSteps.map((step, i) => (
-              <FadeIn key={step.number} delay={0.1 * (i + 1)}>
-                <div className="process-step">
-                  <div className="step-number">{step.number}</div>
-                  <h3 className="step-title">{step.title}</h3>
-                  <p className="step-desc">{step.desc}</p>
-                  <div className="process-industry-note">
-                    <span className="process-industry-arrow">↳</span>
-                    <span>{step.industryNote[activeIndustry]}</span>
-                  </div>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
+          <FadeIn>
+            <ProgressStepsSectionWrapper
+              steps={processSteps}
+              activeIndustry={activeIndustry}
+            />
+          </FadeIn>
           <FadeIn delay={0.3}>
             <div className="integration-row">
               <span className="integration-row-label">Powered by</span>
