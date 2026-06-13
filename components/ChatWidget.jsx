@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import WhatsAppChatWidgetWrapper from './WhatsAppChatWidgetWrapper'
 
 const platforms = [
   {
@@ -42,15 +43,17 @@ const platforms = [
 
 export default function ChatWidget() {
   const [open, setOpen] = useState(false)
+  const [showWhatsApp, setShowWhatsApp] = useState(false)
 
   return (
     <div className="chat-widget">
+      <WhatsAppChatWidgetWrapper show={showWhatsApp} onClose={() => setShowWhatsApp(false)} />
       {platforms.map((p, i) => (
         <a
           key={p.id}
-          href={p.url}
-          target="_blank"
-          rel="noopener noreferrer"
+          href={p.id === 'whatsapp' ? undefined : p.url}
+          target={p.id === 'whatsapp' ? undefined : '_blank'}
+          rel={p.id === 'whatsapp' ? undefined : 'noopener noreferrer'}
           className="chat-widget-btn"
           style={{
             backgroundColor: p.color,
@@ -59,6 +62,8 @@ export default function ChatWidget() {
             opacity: open ? 1 : 0,
           }}
           aria-label={p.label}
+          onClick={p.id === 'whatsapp' ? (e) => { e.preventDefault(); setShowWhatsApp(v => !v) } : undefined}
+          role={p.id === 'whatsapp' ? 'button' : undefined}
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
             <path d={p.icon} />
@@ -67,7 +72,7 @@ export default function ChatWidget() {
       ))}
       <button
         className="chat-widget-main"
-        onClick={() => setOpen(!open)}
+        onClick={() => { setOpen(!open); if (!open) setShowWhatsApp(false) }}
         style={{
           backgroundColor: open ? '#666' : 'var(--accent)',
           transform: open ? 'rotate(45deg)' : 'rotate(0deg)',

@@ -1152,6 +1152,98 @@ h1, h2, h3, h4, h5, h6 {
   opacity: 0.6;
 }
 
+/* ============== PROGRESS STEP CARD ============== */
+
+.progress-step-card {
+  display: flex;
+  gap: 24px;
+  padding: 32px;
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: all var(--transition);
+}
+
+.progress-step-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.progress-step-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.progress-step-num {
+  font-family: var(--font-heading), sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+  opacity: 0.5;
+}
+
+.progress-step-bar-track {
+  width: 4px;
+  flex: 1;
+  min-height: 100px;
+  background: rgba(212, 168, 83, 0.15);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-step-bar-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--accent);
+  border-radius: 4px;
+  transform-origin: bottom;
+}
+
+.progress-step-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.progress-step-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.progress-step-desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.progress-step-note {
+  margin-top: 4px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  font-size: 0.84rem;
+  color: var(--accent);
+  line-height: 1.5;
+  display: flex;
+  gap: 6px;
+  font-style: italic;
+}
+
+.progress-step-note-arrow {
+  flex-shrink: 0;
+  font-style: normal;
+  opacity: 0.6;
+}
+
 /* ============== FAQ ============== */
 
 .faq-section {
@@ -1373,6 +1465,115 @@ h1, h2, h3, h4, h5, h6 {
   transform: scale(1.1) !important;
 }
 
+/* ============== WHATSAPP CHAT WIDGET ============== */
+
+.wa-popup {
+  position: absolute;
+  bottom: calc(100% + 16px);
+  right: 0;
+  width: 320px;
+  background: #0a0a0a;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  z-index: 10000;
+}
+
+.wa-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  background: #008069;
+}
+
+.wa-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.wa-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.wa-close:hover {
+  opacity: 1;
+}
+
+.wa-body {
+  padding: 30px 10%;
+}
+
+.wa-bubble {
+  background: #1a1a1a;
+  border-radius: 12px 12px 12px 4px;
+  padding: 14px 18px;
+  position: relative;
+}
+
+.wa-bubble-text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+
+.wa-time {
+  display: block;
+  text-align: right;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 6px;
+  letter-spacing: -0.01em;
+}
+
+.wa-footer {
+  padding: 0 10% 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wa-status {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+  text-align: center;
+  letter-spacing: -0.01em;
+}
+
+.wa-button {
+  display: block;
+  width: 100%;
+  padding: 12px 24px;
+  background: #25d366;
+  color: #fff;
+  text-align: center;
+  border-radius: var(--wa-btn-radius, 100px);
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  transition: opacity 0.2s;
+}
+
+.wa-button:hover {
+  opacity: 0.9;
+}
+
 /* ============== CTA ============== */
 
 .cta-section {
@@ -1491,9 +1692,84 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-white);
 }
 
-.footer-bottom {
+.footer-ask-ai {
   max-width: 1160px;
   margin: 48px auto 0;
+  padding: 0 24px;
+}
+
+.ask-ai-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px 0;
+  border-top: 1px solid var(--border-dark);
+}
+
+.ask-ai-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+
+.ask-ai-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.ask-ai-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.ask-ai-btn:hover {
+  color: #fff;
+  border-color: var(--ai-color, var(--accent));
+  background: color-mix(in srgb, var(--ai-color, var(--accent)) 15%, transparent);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--ai-color, var(--accent)) 20%, transparent);
+}
+
+.ask-ai-btn-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.ask-ai-btn-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.ask-ai-btn:hover .ask-ai-btn-icon {
+  opacity: 1;
+}
+
+.footer-bottom {
+  max-width: 1160px;
+  margin: 0 auto;
   padding: 24px 24px 0;
   border-top: 1px solid var(--border-dark);
   display: flex;
