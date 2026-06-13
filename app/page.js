@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { motion, useInView } from 'framer-motion'
 import Link from 'next/link'
 
@@ -105,8 +105,163 @@ const solutions = [
   'Tech & SaaS Companies',
 ]
 
+const faqs = [
+  {
+    q: 'What is Future Stack AI?',
+    a: 'Future Stack AI is a full-service AI and technology company that builds intelligent systems — from chatbots and ML models to cloud infrastructure and data analytics.',
+  },
+  {
+    q: 'Do I need technical knowledge to work with you?',
+    a: 'Not at all. We handle the technical implementation from start to finish. You provide the vision, we build the solution.',
+  },
+  {
+    q: 'How do I get started?',
+    a: 'Browse our services, select the one you need, and submit an enquiry. Our team will get back to you within 24 hours.',
+  },
+  {
+    q: 'What services do you offer?',
+    a: 'We offer AI chatbots, machine learning solutions, web development, data analytics, cloud solutions, and AI automation — all tailored to your business needs.',
+  },
+]
+
+function FAQItem({ number, question, answer }) {
+  const [open, setOpen] = useState(false)
+  return (
+    <div className={`faq-item ${open ? 'faq-item-open' : ''}`}>
+      <button className="faq-question" onClick={() => setOpen(!open)}>
+        <span className="faq-number">{number}</span>
+        <span className="faq-question-text">{question}</span>
+        <span className={`faq-icon ${open ? 'faq-icon-open' : ''}`}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </span>
+      </button>
+      <div className={`faq-answer ${open ? 'faq-answer-open' : ''}`}>
+        <div className="faq-answer-inner">
+          <span className="faq-answer-number">{number}</span>
+          <p>{answer}</p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function TypewriterEffect() {
+  const words = ['Intelligence', 'Automation', 'Innovation', 'Efficiency', 'Growth']
+  const [displayed, setDisplayed] = useState('')
+  const [wordIndex, setWordIndex] = useState(0)
+  const [charIndex, setCharIndex] = useState(0)
+  const [isDeleting, setIsDeleting] = useState(false)
+  const [showCursor, setShowCursor] = useState(true)
+
+  const currentWord = words[wordIndex % words.length]
+
+  useEffect(() => {
+    if (!isDeleting && charIndex < currentWord.length) {
+      const t = setTimeout(() => {
+        setDisplayed(currentWord.slice(0, charIndex + 1))
+        setCharIndex(charIndex + 1)
+      }, 100)
+      return () => clearTimeout(t)
+    }
+    if (!isDeleting && charIndex === currentWord.length) {
+      const t = setTimeout(() => setIsDeleting(true), 1500)
+      return () => clearTimeout(t)
+    }
+    if (isDeleting && charIndex > 0) {
+      const t = setTimeout(() => {
+        setDisplayed(currentWord.slice(0, charIndex - 1))
+        setCharIndex(charIndex - 1)
+      }, 50)
+      return () => clearTimeout(t)
+    }
+    if (isDeleting && charIndex === 0) {
+      const t = setTimeout(() => {
+        setIsDeleting(false)
+        setWordIndex(i => i + 1)
+      }, 500)
+      return () => clearTimeout(t)
+    }
+  }, [charIndex, isDeleting, currentWord])
+
+  useEffect(() => {
+    const blink = setInterval(() => setShowCursor(v => !v), 500)
+    return () => clearInterval(blink)
+  }, [])
+
+  return (
+    <span className="typewriter">
+      <span>{displayed}</span>
+      <span className={`typewriter-cursor ${showCursor ? '' : 'typewriter-cursor-hidden'}`}>|</span>
+    </span>
+  )
+}
+
+function FluidButton({ href, children }) {
+  return (
+    <Link href={href} className="fluid-btn">
+      <span className="fluid-btn-text">{children}</span>
+      <span className="fluid-btn-text fluid-btn-text-lower">{children}</span>
+      <span className="fluid-btn-overlay" />
+    </Link>
+  )
+}
+
+function BookCallButton({ href, children }) {
+  return (
+    <Link href={href} className="book-call-btn">
+      <span className="book-call-icons">
+        <span className="book-call-person">
+          <span className="book-call-circle">
+            <svg className="book-call-svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+            </svg>
+          </span>
+        </span>
+        <span className="book-call-person book-call-person-2">
+          <span className="book-call-circle">
+            <svg className="book-call-svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+            </svg>
+          </span>
+        </span>
+        <span className="book-call-plus">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+          </svg>
+        </span>
+      </span>
+      <span className="book-call-text">{children}</span>
+    </Link>
+  )
+}
+
+const pricingTiers = ['Starter', 'Professional', 'Enterprise']
+
+function DynamicToggle({ active, onChange }) {
+  return (
+    <div className="dynamic-toggle">
+      <div className="dynamic-toggle-slider" style={{
+        width: `calc(${100 / pricingTiers.length}% - 4px)`,
+        transform: `translateX(${active * 100}%)`,
+      }} />
+      {pricingTiers.map((tier, i) => (
+        <button
+          key={tier}
+          className={`dynamic-toggle-label ${active === i ? 'dynamic-toggle-active' : ''}`}
+          onClick={() => onChange(i)}
+        >
+          {tier}
+        </button>
+      ))}
+    </div>
+  )
+}
+
 export default function Home() {
   const [activeTestimonial, setActiveTestimonial] = useState(0)
+  const [pricingTier, setPricingTier] = useState(1)
 
   return (
     <>
@@ -127,7 +282,7 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2, ease: [0.21, 0.47, 0.32, 0.98] }}
             >
-              Build the Future<br />of <em>Intelligence</em>
+              Build the Future<br />of <TypewriterEffect />
             </motion.h1>
             <motion.p
               className="hero-subtitle"
@@ -143,13 +298,8 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5, ease: [0.21, 0.47, 0.32, 0.98] }}
             >
-              <Link href="/services" className="btn-white">
-                Explore Services
-                <span className="btn-arrow">→</span>
-              </Link>
-              <Link href="/contact" className="btn-outline" style={{ color: '#fff', borderColor: 'rgba(255,255,255,0.2)' }}>
-                Get in Touch
-              </Link>
+              <FluidButton href="/services">Explore Services</FluidButton>
+              <BookCallButton href="/contact">Book a 15-min talk</BookCallButton>
             </motion.div>
           </div>
           <div className="hero-visual" aria-hidden="true">
@@ -330,9 +480,14 @@ export default function Home() {
               Start with a free consultation. Upgrade as you grow — no lock-in, no surprises.
             </p>
           </FadeIn>
+          <FadeIn delay={0.05}>
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 40 }}>
+              <DynamicToggle active={pricingTier} onChange={setPricingTier} />
+            </div>
+          </FadeIn>
           <div className="home-pricing-grid">
             <FadeIn delay={0.1}>
-              <div className="home-pricing-card">
+              <div className={`home-pricing-card${pricingTier === 0 ? ' featured' : ''}`}>
                 <h3>Starter</h3>
                 <div className="home-pricing-price">$19<span>/mo</span></div>
                 <p>For individuals and small projects</p>
@@ -349,7 +504,7 @@ export default function Home() {
               </div>
             </FadeIn>
             <FadeIn delay={0.2}>
-              <div className="home-pricing-card featured">
+              <div className={`home-pricing-card${pricingTier === 1 ? ' featured' : ''}`}>
                 <h3>Professional</h3>
                 <div className="home-pricing-price">$49<span>/mo</span></div>
                 <p>For freelancers and growing teams</p>
@@ -366,7 +521,7 @@ export default function Home() {
               </div>
             </FadeIn>
             <FadeIn delay={0.3}>
-              <div className="home-pricing-card">
+              <div className={`home-pricing-card${pricingTier === 2 ? ' featured' : ''}`}>
                 <h3>Enterprise</h3>
                 <div className="home-pricing-price">$99<span>/mo</span></div>
                 <p>For businesses at scale</p>
@@ -415,6 +570,43 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="faq-section">
+        <div className="section-container">
+          <div className="faq-layout">
+            <div className="faq-left">
+              <div className="faq-label">FAQ</div>
+              <FadeIn>
+                <span className="section-label">/ Questions & Answers</span>
+                <h2 className="section-title">Got questions? We&apos;ve got answers.</h2>
+                <p className="section-desc">
+                  Have more questions? Don&apos;t hesitate to email us at{' '}
+                  <a href="mailto:hello@futurestack.ai" className="faq-email">hello@futurestack.ai</a>
+                </p>
+              </FadeIn>
+              <FadeIn delay={0.1}>
+                <div className="faq-contact-buttons">
+                  <a href="tel:+1234567890" className="btn-outline">
+                    Call Us
+                    <span className="btn-arrow">→</span>
+                  </a>
+                  <a href="mailto:hello@futurestack.ai" className="btn-outline">
+                    Email Us
+                    <span className="btn-arrow">→</span>
+                  </a>
+                </div>
+              </FadeIn>
+            </div>
+            <div className="faq-right">
+              {faqs.map((item, i) => (
+                <FadeIn key={i} delay={0.08 * i}>
+                  <FAQItem number={String(i + 1).padStart(2, '0')} question={item.q} answer={item.a} />
+                </FadeIn>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section id="contact" className="cta-section">
         <div className="section-container">
           <FadeIn>
@@ -423,10 +615,7 @@ export default function Home() {
               <p className="cta-desc">
                 Supercharge your business with AI-powered systems and effortless collaboration — perfect for teams of any size.
               </p>
-              <Link href="/services" className="btn-white btn-large">
-                Get Started
-                <span className="btn-arrow">→</span>
-              </Link>
+              <FluidButton href="/services">Get Started</FluidButton>
             </div>
           </FadeIn>
         </div>

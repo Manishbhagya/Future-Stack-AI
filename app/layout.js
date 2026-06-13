@@ -3,6 +3,7 @@ import './globals.css'
 import Providers from './providers'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import ChatWidget from '../components/ChatWidget'
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -29,6 +30,7 @@ export default function RootLayout({ children }) {
           <Navbar />
           <main>{children}</main>
           <Footer />
+          <ChatWidget />
         </Providers>
       </body>
     </html>
