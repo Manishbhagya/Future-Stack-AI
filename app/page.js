@@ -51,12 +51,14 @@ const logoLogos = [
 function LogoGarden() {
   const trackRef = useRef(null)
   const barRef = useRef(null)
+  const thumbRef = useRef(null)
+  const [progress, setProgress] = useState(0)
   const [isHovered, setIsHovered] = useState(false)
   const [isDragging, setIsDragging] = useState(false)
   const animRef = useRef(null)
 
   const all = [...logoLogos, ...logoLogos, ...logoLogos]
-
+  const itemW = 140
   const speed = 40
 
   useEffect(() => {
@@ -70,10 +72,11 @@ function LogoGarden() {
       }
       const dx = speed * (16 / 1000)
       let currentX = parseFloat(track.dataset.x || '0') - dx
-      const totalW = logoLogos.length * 140
+      const totalW = logoLogos.length * itemW
       if (currentX <= -totalW) currentX += totalW
       track.dataset.x = currentX
       track.style.transform = `translate3d(${currentX}px, 0, 0)`
+      setProgress(-currentX / totalW)
       animRef.current = requestAnimationFrame(tick)
     }
     animRef.current = requestAnimationFrame(tick)
@@ -85,11 +88,12 @@ function LogoGarden() {
     if (!bar) return
     const rect = bar.getBoundingClientRect()
     const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width))
-    const totalW = logoLogos.length * 140
+    const totalW = logoLogos.length * itemW
     const track = trackRef.current
     if (!track) return
     track.dataset.x = -pct * totalW
     track.style.transform = `translate3d(${-pct * totalW}px, 0, 0)`
+    setProgress(pct)
   }
 
   const onBarMouseDown = (e) => {
@@ -117,7 +121,7 @@ function LogoGarden() {
       </div>
       <div className="logo-garden-bar" ref={barRef} onMouseDown={onBarMouseDown}>
         <div className="logo-garden-bar-track">
-          <div className="logo-garden-bar-thumb" />
+          <div className="logo-garden-bar-thumb" ref={thumbRef} style={{ left: `${progress * 100}%` }} />
         </div>
       </div>
     </div>

@@ -877,13 +877,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .logo-garden-track:hover .logo-garden-item {
-  opacity: 0.4;
+  opacity: 0.3;
 }
 
-.logo-garden-track:hover .logo-garden-item:hover {
-  opacity: 1;
+.logo-garden-item:hover {
+  opacity: 1 !important;
   color: var(--accent);
-  transform: scale(1.08);
+  transform: scale(1.12);
 }
 
 .logo-garden-bar {
@@ -906,9 +906,10 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--accent);
   border-radius: 2px;
   position: absolute;
-  left: 0;
   top: 0;
+  transform: translateX(-50%);
   pointer-events: none;
+  transition: left 0.05s linear;
 }
 
 .stats-section {
