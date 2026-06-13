@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import ChatWidget from '../components/ChatWidget'
 import AccessibilityProWrapper from '../components/AccessibilityProWrapper'
+import CookieConsentBannerWrapper from '../components/CookieConsentBannerWrapper'
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -33,6 +34,7 @@ export default function RootLayout({ children }) {
           <Footer />
           <ChatWidget />
           <AccessibilityProWrapper />
+          <CookieConsentBannerWrapper />
         </Providers>
       </body>
     </html>
