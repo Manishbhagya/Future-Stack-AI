@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import AskAIWrapper from './AskAIWrapper'
 
 function Copyright() {
   const year = new Date().getFullYear()
@@ -54,6 +55,9 @@ export default function Footer() {
             <Link href="/sign-up">Get Started</Link>
           </nav>
         </div>
+      </div>
+      <div className="footer-ask-ai">
+        <AskAIWrapper />
       </div>
       <div className="footer-bottom">
         <p className="footer-copy"><Copyright /></p>
