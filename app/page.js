@@ -3,6 +3,7 @@
 import { useRef, useState, useEffect } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
 import Link from 'next/link'
+import ScrollIndicatorWrapper from '../components/ScrollIndicatorWrapper'
 
 function FadeIn({ children, delay = 0 }) {
   const ref = useRef(null)
@@ -685,6 +686,16 @@ export default function Home() {
             <div className="hero-glyph">FSA</div>
             <div className="hero-glyph-accent">✦</div>
           </div>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: 48, height: 48 }}>
+          <ScrollIndicatorWrapper
+            animationPreset="elegant-chevrons"
+            chevronColor="#D4A853"
+            chevronSize={6}
+            chevronGap={4}
+            scrollType="section"
+            sectionName="services"
+          />
         </div>
         <LogoGarden />
       </section>
