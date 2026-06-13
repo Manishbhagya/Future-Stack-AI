@@ -1562,7 +1562,7 @@ h1, h2, h3, h4, h5, h6 {
   background: #25d366;
   color: #fff;
   text-align: center;
-  border-radius: var(--wa-btn-radius, 100px);
+  border-radius: 100px;
   font-size: 16px;
   font-weight: 600;
   text-decoration: none;

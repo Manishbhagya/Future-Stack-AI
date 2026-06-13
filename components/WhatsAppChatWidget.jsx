@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const BUSINESS_HOURS = {
@@ -31,17 +31,16 @@ function formatTime(date) {
   return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })
 }
 
-export default function WhatsAppChatWidget({ show, onClose }) {
-  const [mounted, setMounted] = useState(false)
-  useEffect(() => { setMounted(true) }, [])
-
-  const phoneNumber = '1234567890'
+export default function WhatsAppChatWidget({ show, onClose, phoneNumber = '1234567890' }) {
+  const timestampRef = useRef(null)
   const preFilledMessage = 'Hello! I would like to know more.'
   const status = getBusinessStatus()
 
-  const waUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(preFilledMessage)}`
+  useEffect(() => {
+    if (show) timestampRef.current = new Date()
+  }, [show])
 
-  if (!mounted) return null
+  const waUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(preFilledMessage)}`
 
   return (
     <AnimatePresence>
@@ -70,7 +69,7 @@ export default function WhatsAppChatWidget({ show, onClose }) {
           <div className="wa-body">
             <div className="wa-bubble">
               <p className="wa-bubble-text">Hello 👋, You can place your order right here in the chat</p>
-              <span className="wa-time">{formatTime(new Date())}</span>
+              <span className="wa-time">{timestampRef.current ? formatTime(timestampRef.current) : ''}</span>
             </div>
           </div>
 
