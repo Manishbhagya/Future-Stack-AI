@@ -9,7 +9,7 @@ const AccessibilityPro = dynamic(
 
 export default function AccessibilityProWrapper() {
   return <AccessibilityPro
-    startPosition="Bottom Right"
+    startPosition="Bottom Left"
     buttonSize={52}
     buttonColor="#D4A853"
     triggerIcon="Access"
