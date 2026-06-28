@@ -1,27 +1,16 @@
 'use client'
 
-import { useRef, useState, useEffect } from 'react'
-import { motion, AnimatePresence, useInView } from 'framer-motion'
+import React, { useRef, useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import ScrollIndicatorWrapper from '../components/ScrollIndicatorWrapper'
 import XOrbitWrapper from '../components/XOrbitWrapper'
 import SocialProofCardWrapper from '../components/SocialProofCardWrapper'
 import ProgressStepsSectionWrapper from '../components/ProgressStepsSectionWrapper'
-
-function FadeIn({ children, delay = 0 }) {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-60px' })
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 24 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay, ease: [0.21, 0.47, 0.32, 0.98] }}
-    >
-      {children}
-    </motion.div>
-  )
-}
+import AuroraBackground from '../components/AuroraBackground'
+import FadeIn from '../components/FadeIn'
+import { RobotIcon, ChartIcon, MonitorIcon, serviceIcons, featureIcons, integrationIcons } from '../components/Icons'
+import { staggerContainer, fadeUp } from '../lib/animationVariants'
 
 const services = [
   {
@@ -326,7 +315,7 @@ function ProgressSlideshow() {
             onClick={() => { setActive(i); startTimeRef.current = Date.now(); setProgress(0) }}
           >
             <div className="progress-slideshow-card-header">
-              <span className="progress-slideshow-card-icon">{item.icon}</span>
+              <span className="progress-slideshow-card-icon">{React.createElement(featureIcons[item.icon], { size: 24 })}</span>
               <div>
                 <strong className="progress-slideshow-card-title">{item.title}</strong>
                 <p className="progress-slideshow-card-desc">{item.desc}</p>
@@ -351,7 +340,7 @@ function ProgressSlideshow() {
             transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
             style={{ background: `linear-gradient(135deg, ${color.from}, ${color.to})` }}
           >
-            <span className="progress-slideshow-visual-icon">{f.icon}</span>
+            <span className="progress-slideshow-visual-icon">{React.createElement(featureIcons[f.icon], { size: 40 })}</span>
             <h3 className="progress-slideshow-visual-title">{f.title}</h3>
             <p className="progress-slideshow-visual-desc">{f.desc}</p>
           </motion.div>
@@ -644,7 +633,8 @@ export default function Home() {
 
   return (
     <>
-      <section className="hero-section">
+      <section className="hero-section has-noise">
+        <AuroraBackground opacity={0.35} />
         <div className="hero-inner">
           <div className="hero-text">
             <motion.span
@@ -663,6 +653,12 @@ export default function Home() {
             >
               Build the Future<br />of <TypewriterEffect />
             </motion.h1>
+            <motion.div
+              className="hero-rule"
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.6, delay: 0.3, ease: [0.21, 0.47, 0.32, 0.98] }}
+            />
             <motion.p
               className="hero-subtitle"
               initial={{ opacity: 0, y: 20 }}
@@ -692,6 +688,7 @@ export default function Home() {
           <div className="hero-visual" aria-hidden="true">
             <div className="hero-orb" />
             <div className="hero-grid" />
+            <div className="hero-corner" />
           </div>
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: 48, height: 48 }}>
@@ -706,7 +703,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="trust-bar-section">
+      <section className="trust-bar-section has-noise">
         <div className="section-container">
           <FadeIn>
             <div className="trust-bar-layout">
@@ -716,7 +713,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="services" className="services-section">
+      <section id="services" className="services-section has-noise">
         <div className="section-container">
           <FadeIn>
             <span className="section-label">/ Our Services</span>
@@ -728,15 +725,21 @@ export default function Home() {
           <FadeIn delay={0.1}>
             <UseCaseTabs active={activeIndustry} onChange={setActiveIndustry} />
           </FadeIn>
-          <div className="feature-grid">
+          <motion.div
+            className="feature-grid"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-60px' }}
+          >
             {services.map((service, i) => {
               const ind = service.industries[activeIndustry]
               return (
-                <FadeIn key={service.slug} delay={0.1 * i}>
+                <motion.div key={service.slug} variants={fadeUp}>
                   <Link href={`/services/${service.slug}`} className="feature-card">
                     <div className="feature-image-wrap">
                       <div className="feature-image-placeholder">
-                        <span>{service.icon}</span>
+                        {React.createElement(serviceIcons[service.slug], { size: 48 })}
                       </div>
                     </div>
                     <div className="feature-content">
@@ -745,14 +748,14 @@ export default function Home() {
                       <span className="service-result-badge">{ind.result}</span>
                     </div>
                   </Link>
-                </FadeIn>
+                </motion.div>
               )
             })}
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      <section className="process-section">
+      <section className="process-section has-noise">
         <div className="section-container">
           <FadeIn>
             <span className="section-label">/ How We Work</span>
@@ -772,7 +775,7 @@ export default function Home() {
               <span className="integration-row-label">Powered by</span>
               <div className="integration-row-logos">
                 {integrations.map((item, i) => (
-                  <span key={i} className="integration-row-chip">{item.icon} {item.name}</span>
+                  <span key={i} className="integration-row-chip">{React.createElement(integrationIcons[item.icon], { size: 16 })} {item.name}</span>
                 ))}
               </div>
               <Link href="/contact" className="integration-row-link">View all →</Link>
@@ -781,7 +784,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="benefits-section">
+      <section className="benefits-section has-noise">
         <div className="section-container">
           <FadeIn>
             <span className="section-label" style={{ color: '#D4A853' }}>/ Features</span>
@@ -793,7 +796,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="home-pricing-section">
+      <section className="home-pricing-section has-noise">
         <div className="section-container">
           <FadeIn>
             <span className="section-label">/ Pricing</span>
@@ -863,7 +866,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="testimonial-section">
+      <section className="testimonial-section has-noise">
         <div className="section-container">
           <FadeIn>
             <h2 className="section-title section-title-center">Loved by teams that build with us</h2>
@@ -874,7 +877,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="solution-section">
+      <section className="solution-section has-noise">
         <div className="section-container">
           <div className="solution-layout">
             <FadeIn>
@@ -922,7 +925,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="faq-section">
+      <section className="faq-section has-noise">
         <div className="section-container">
           <div className="faq-layout">
             <div className="faq-left">
@@ -959,7 +962,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="contact" className="cta-section">
+      <section id="contact" className="cta-section has-noise">
         <div className="section-container">
           <FadeIn>
             <div className="cta-card cta-gradient">
