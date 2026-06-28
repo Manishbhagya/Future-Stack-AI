@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { fadeUp } from '../lib/animationVariants'
 
-export default function FadeIn({ children, delay = 0, className, as = 'div', once = true }) {
+export default function FadeIn({ children, delay = 0, className = undefined, as = 'div', once = true }) {
   const Tag = motion[as]
   return (
     <Tag

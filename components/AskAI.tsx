@@ -69,7 +69,7 @@ export default function AskAI() {
               key={s.name}
               href={s.url(prompt)}
               className="ask-ai-btn"
-              style={{ '--ai-color': s.color }}
+              style={{ '--ai-color': s.color } as React.CSSProperties}
               {...linkAttrs}
             >
               <svg className="ask-ai-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">

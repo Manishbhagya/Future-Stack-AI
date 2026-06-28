@@ -1,3 +1,4 @@
+// @ts-nocheck
 'use client'
 // Animated scroll indicator with mouse-following dot that bounces when idle
 import{jsx as _jsx,jsxs as _jsxs}from"react/jsx-runtime";import{motion,useAnimationControls}from"framer-motion";import{useEffect}from"react";const addPropertyControls=()=>{};const ControlType={};/**

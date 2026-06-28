@@ -163,7 +163,7 @@ function BottomLabel({ activeIndex, activeItem, LabelText }) {
 }
 
 export default function FeatureWheel({
-  style,
+  style = {},
   heading = 'Total Control. Zero Chaos.',
   subheading = 'We handle the heavy lifting of organization and tracking to keep your firm running smoothly.',
   items = DEFAULT_ITEMS,
@@ -215,7 +215,7 @@ export default function FeatureWheel({
   const activePos = safeItems.length > 0 ? getPosition(safeIndex, safeItems.length) : { x: 0, y: 0, angleDeg: 0 }
   const activeItem = safeItems[safeIndex]
   const labelOnRight = activePos.x >= 0
-  const spring = { type: 'spring', stiffness: 220, damping: 30, mass: 0.9 }
+  const spring = { type: 'spring' as const, stiffness: 220, damping: 30, mass: 0.9 }
   const wheelSize = eff.radius * 2 + eff.iconSize * 2 + 16
 
   const LabelText = (

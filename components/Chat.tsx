@@ -4,9 +4,7 @@ import { useState, useRef, useEffect } from 'react'
 import { useChat } from '@ai-sdk/react'
 
 export default function Chat() {
-  const { messages, sendMessage, status, error } = useChat({
-    api: '/api/chat',
-  })
+  const { messages, sendMessage, status, error } = useChat({})
   const isLoading = status === 'submitted' || status === 'streaming'
 
   const [input, setInput] = useState('')
@@ -71,7 +69,7 @@ export default function Chat() {
               {m.role === 'user' ? 'U' : 'AI'}
             </div>
             <div className="chat-bubble">
-              {m.content || m.parts?.map((p) => p.text || '').join('')}
+              {m.parts?.filter((p) => p.type === 'text').map((p) => p.text).join('')}
             </div>
           </div>
         ))}
