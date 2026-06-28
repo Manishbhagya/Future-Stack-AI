@@ -1,12 +1,12 @@
 /** @type {import('next').NextConfig} */
 const csp = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://clerk.accounts.dev https://challenges.cloudflare.com",
+  "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://*.clerk.accounts.dev https://challenges.cloudflare.com",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com",
   "img-src 'self' blob: data: https://img.clerk.com https://*.supabase.co",
-  "connect-src 'self' https://api.clerk.com https://clerk.accounts.dev https://*.supabase.co https://openrouter.ai",
-  "frame-src 'self' https://challenges.cloudflare.com https://clerk.accounts.dev",
+  "connect-src 'self' https://api.clerk.com https://*.clerk.accounts.dev https://*.supabase.co https://openrouter.ai",
+  "frame-src 'self' https://challenges.cloudflare.com https://*.clerk.accounts.dev",
   "base-uri 'self'",
 ]
 
