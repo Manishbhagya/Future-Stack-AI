@@ -45,4 +45,4 @@ const config = {
   },
 }
 
-module.exports = { config, requiredEnv }
+export { config, requiredEnv }

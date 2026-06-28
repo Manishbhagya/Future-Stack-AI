@@ -1,4 +1,8 @@
 class AppError extends Error {
+  code!: string
+  statusCode!: number
+  isOperational!: boolean
+
   constructor(message, code, statusCode, isOperational = true) {
     super(message)
     this.name = this.constructor.name
@@ -16,6 +20,8 @@ class NotFoundError extends AppError {
 }
 
 class ValidationError extends AppError {
+  errors!: any
+
   constructor(errors) {
     super('Validation failed', 'VALIDATION_ERROR', 422)
     this.errors = errors
@@ -52,8 +58,8 @@ class ExternalServiceError extends AppError {
   }
 }
 
-function formatErrorResponse(err, requestId) {
-  const body = {
+function formatErrorResponse(err: AppError & { errors?: any }, requestId?: string) {
+  const body: Record<string, unknown> = {
     title: err.code || 'INTERNAL_ERROR',
     status: err.statusCode || 500,
     detail: err.isOperational ? err.message : 'An unexpected error occurred',
@@ -63,7 +69,7 @@ function formatErrorResponse(err, requestId) {
   return body
 }
 
-module.exports = {
+export {
   AppError,
   NotFoundError,
   ValidationError,

@@ -36,4 +36,4 @@ function withRequestId(handler) {
   }
 }
 
-module.exports = { logger, requestId, withRequestId }
+export { logger, requestId, withRequestId }

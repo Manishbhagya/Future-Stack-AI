@@ -1,4 +1,4 @@
-const { z } = require('zod')
+import { z } from 'zod'
 
 const waitlistSchema = z.object({
   firstName: z.string().min(1, 'First name is required').max(100),
@@ -28,4 +28,4 @@ const chatRequestSchema = z.object({
   messages: z.array(chatMessageSchema).min(1, 'At least one message is required'),
 })
 
-module.exports = { waitlistSchema, enquirySchema, chatRequestSchema }
+export { waitlistSchema, enquirySchema, chatRequestSchema }
