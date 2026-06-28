@@ -19,6 +19,7 @@ const resources = [
   { label: 'All Services', href: '/services', desc: 'Explore everything we offer' },
   { label: 'How We Work', href: '/about', desc: 'Our process and approach' },
   { label: 'Pricing', href: '/pricing', desc: 'Plans for every team' },
+  { label: 'Total Control', href: '/total-control', desc: 'Full platform overview' },
   { label: 'FAQs', href: '/faqs', desc: 'Common questions answered' },
 ]
 
@@ -135,6 +136,7 @@ export default function Navbar() {
             <Link href="/about" className="nav-mobile-link" onClick={() => setMobileOpen(false)}>About</Link>
             <Link href="/blog" className="nav-mobile-link" onClick={() => setMobileOpen(false)}>Blog</Link>
             <Link href="/pricing" className="nav-mobile-link" onClick={() => setMobileOpen(false)}>Pricing</Link>
+            <Link href="/total-control" className="nav-mobile-link" onClick={() => setMobileOpen(false)}>Total Control</Link>
             <Link href="/faqs" className="nav-mobile-link" onClick={() => setMobileOpen(false)}>FAQs</Link>
             <Link href="/#contact" className="nav-mobile-link" onClick={() => setMobileOpen(false)}>Contact</Link>
             {!isSignedIn && (
