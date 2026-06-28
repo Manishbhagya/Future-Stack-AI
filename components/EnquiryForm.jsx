@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useUser } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 export default function EnquiryForm({ serviceSlug, serviceTitle }) {
   const { isSignedIn, user } = useUser()
@@ -18,7 +19,7 @@ export default function EnquiryForm({ serviceSlug, serviceTitle }) {
 
   if (!isSignedIn) {
     return (
-      <p>Please <a href="/sign-in">sign in</a> to enquire about this service.</p>
+      <p>Please <Link href="/sign-in">sign in</Link> to enquire about this service.</p>
     )
   }
 

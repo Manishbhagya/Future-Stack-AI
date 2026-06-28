@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const BUSINESS_HOURS = {
@@ -32,12 +32,11 @@ function formatTime(date) {
 }
 
 export default function WhatsAppChatWidget({ show, onClose, phoneNumber = '9348544857' }) {
-  const timestampRef = useRef(null)
   const preFilledMessage = 'Hi Future Stack AI! I\'m interested in your AI services. Can you tell me more?'
   const status = getBusinessStatus()
-
-  useEffect(() => {
-    if (show) timestampRef.current = new Date()
+  const displayTime = useMemo(() => {
+    if (!show) return ''
+    return formatTime(new Date())
   }, [show])
 
   const waUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(preFilledMessage)}`
@@ -69,7 +68,7 @@ export default function WhatsAppChatWidget({ show, onClose, phoneNumber = '93485
           <div className="wa-body">
             <div className="wa-bubble">
               <p className="wa-bubble-text">Hello 👋, You can place your order right here in the chat</p>
-              <span className="wa-time">{timestampRef.current ? formatTime(timestampRef.current) : ''}</span>
+              <span className="wa-time">{displayTime}</span>
             </div>
           </div>
 
