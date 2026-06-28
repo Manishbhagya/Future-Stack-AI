@@ -6,6 +6,7 @@ import Footer from '../components/Footer'
 import ChatWidget from '../components/ChatWidget'
 import AccessibilityProWrapper from '../components/AccessibilityProWrapper'
 import CookieConsentBannerWrapper from '../components/CookieConsentBannerWrapper'
+import PageTransition from '../components/PageTransition'
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -30,7 +31,7 @@ export default function RootLayout({ children }) {
       <body>
         <Providers>
           <Navbar />
-          <main>{children}</main>
+          <main><PageTransition>{children}</PageTransition></main>
           <Footer />
           <ChatWidget />
           <AccessibilityProWrapper />

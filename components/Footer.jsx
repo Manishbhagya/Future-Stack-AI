@@ -1,7 +1,9 @@
 'use client'
 
+import { motion } from 'framer-motion'
 import Link from 'next/link'
 import AskAIWrapper from './AskAIWrapper'
+import { staggerContainer, fadeUp } from '../lib/animationVariants'
 
 function Copyright() {
   const year = new Date().getFullYear()
@@ -31,8 +33,14 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer className="site-footer">
-      <div className="footer-inner">
+    <motion.footer
+      className="site-footer"
+      variants={staggerContainer}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-40px' }}
+    >
+      <motion.div className="footer-inner" variants={fadeUp} custom={0}>
         <div className="footer-brand">
           <Link href="/" className="footer-logo">
             Future<span>Stack</span>
@@ -55,11 +63,11 @@ export default function Footer() {
             <Link href="/sign-up">Get Started</Link>
           </nav>
         </div>
-      </div>
-      <div className="footer-ask-ai">
+      </motion.div>
+      <motion.div className="footer-ask-ai" variants={fadeUp} custom={0.1}>
         <AskAIWrapper />
-      </div>
-      <div className="footer-bottom">
+      </motion.div>
+      <motion.div className="footer-bottom" variants={fadeUp} custom={0.2}>
         <p className="footer-copy"><Copyright /></p>
         <div className="footer-social">
           {socials.map(s => (
@@ -78,7 +86,7 @@ export default function Footer() {
             </a>
           ))}
         </div>
-      </div>
-    </footer>
+      </motion.div>
+    </motion.footer>
   )
 }
