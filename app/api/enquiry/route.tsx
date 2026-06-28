@@ -9,7 +9,7 @@ export async function POST(request) {
   const requestId = `req_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`
 
   try {
-    const { userId } = auth()
+    const { userId } = await auth() as any
     if (!userId) {
       throw new UnauthorizedError()
     }

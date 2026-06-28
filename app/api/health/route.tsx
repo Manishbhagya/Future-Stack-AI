@@ -7,7 +7,7 @@ export async function GET() {
     status: 'ok',
     version: process.env.npm_package_version || '1.0.0',
     environment: process.env.NODE_ENV || 'development',
-    checks: {},
+    checks: {} as Record<string, { status: string; latencyMs: number; error?: string }>,
   }
 
   const startDb = Date.now()

@@ -1,8 +1,8 @@
 import { auth } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
 
-export default function DashboardLayout({ children }) {
-  const { userId } = auth()
+export default async function DashboardLayout({ children }) {
+  const { userId } = await auth()
   if (!userId) redirect('/sign-in')
 
   return (

@@ -3,7 +3,7 @@ import { createClient } from '../../lib/supabase/server'
 import { UserButton } from '@clerk/nextjs'
 
 export default async function DashboardPage() {
-  const { userId } = auth()
+  const { userId } = await auth()
   const supabase = await createClient()
 
   const { data: enquiries } = await supabase
@@ -16,7 +16,7 @@ export default async function DashboardPage() {
     <div>
       <div className="dashboard-header">
         <h2>Dashboard</h2>
-        <UserButton afterSignOutUrl="/" />
+        <UserButton />
       </div>
       <div className="dashboard-stats">
         <div className="stat-card">
