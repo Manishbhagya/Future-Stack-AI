@@ -18,16 +18,16 @@ const founders = [
     image: '/Profile/manish-bhakti.jpg',
   },
   {
-    name: 'Clarissa Saputra',
-    role: 'Head of Engineering',
-    bio: 'Intl. Physics Olympiad honoree. Published at AAAI 2026. 150K+ following.',
-    initials: 'CS', color: '#ec4899',
+    name: ' Marina Saint - Amant ',
+    role: 'Head of Strategy',
+    bio: 'Intl. Physics Olympiad honoree.',
+    initials: 'MS', color: '#ec4899',
   },
   {
-    name: 'Tejas Gupta',
+    name: 'Vision AI',
     role: 'COO',
-    bio: 'Scaled a company to $40M. Youngest intern at GlobalLogic (Hitachi) at 19.',
-    initials: 'TG', color: '#f59e0b',
+    bio: 'Youngest intern at GlobalLogic (Hitachi) at 19.',
+    initials: 'VA', color: '#f59e0b',
   },
 ]
 
