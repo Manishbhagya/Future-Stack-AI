@@ -167,7 +167,7 @@ export default function Navbar() {
             flexShrink: 0,
           }}
         >
-          Future<span style={{ color: 'var(--accent)' }}>Stack</span>
+          Future<span style={{ color: pathname === '/' ? 'hsl(214, 82%, 50%)' : 'var(--accent)' }}>Stack</span>
         </Link>
 
         {/* Desktop nav items */}

@@ -6,6 +6,7 @@ import DashboardSection from '@/components/sections/DashboardSection'
 import ProblemSection from '@/components/sections/ProblemSection'
 import SocialProof from '@/components/sections/SocialProof'
 import TeamSection from '@/components/sections/TeamSection'
+import InvestorsSection from '@/components/sections/InvestorsSection'
 import FAQSection from '@/components/sections/FAQSection'
 import FinalCTASection from '@/components/sections/FinalCTASection'
 import RevealOnScroll from '@/components/RevealOnScroll'
@@ -22,6 +23,7 @@ export default function Home() {
       <ProblemSection />
       <SocialProof />
       <TeamSection />
+      <InvestorsSection />
       <FAQSection />
       <FinalCTASection />
       <Footer />

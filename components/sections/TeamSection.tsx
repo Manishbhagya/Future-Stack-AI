@@ -71,19 +71,6 @@ export default function TeamSection() {
             </motion.div>
           ))}
         </div>
-
-        <div style={{ textAlign: 'center', marginTop: 60 }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', maxWidth: 600, margin: '0 auto', borderTop: '1px solid rgba(255,255,255,0.06)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-            <a href="https://www.jsv.com" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12, padding: '40px 24px', textDecoration: 'none', transition: 'background 0.3s' }}>
-              <div style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.5)' }}>Jackson Square Ventures</div>
-              <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.25)' }}>Lead Investor</span>
-            </a>
-            <a href="https://f.inc" target="_blank" rel="noopener noreferrer" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12, padding: '40px 24px', textDecoration: 'none', transition: 'background 0.3s', borderLeft: '1px solid rgba(255,255,255,0.06)' }}>
-              <div style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.5)' }}>Founders, Inc.</div>
-              <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.25)' }}>Backer</span>
-            </a>
-          </div>
-        </div>
       </div>
     </section>
   )
