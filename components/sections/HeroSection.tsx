@@ -1,7 +1,6 @@
 'use client'
 
-import { motion, AnimatePresence } from 'framer-motion'
-import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
 
 const osItems = [
   { label: 'Deployments', value: '12 active', color: '#3b82f6' },
@@ -23,9 +22,6 @@ const activityFeed = [
 ]
 
 export default function HeroSection() {
-  const [mounted, setMounted] = useState(false)
-  useEffect(() => { setMounted(true) }, [])
-
   return (
     <section className="lp-hero-section" style={{ position: 'relative', overflow: 'hidden', background: '#0b0d12' }}>
       {/* Cinematic cloud infrastructure background */}
@@ -94,10 +90,8 @@ export default function HeroSection() {
         </motion.div>
 
         {/* Floating AI OS Dashboard */}
-        <AnimatePresence>
-          {mounted && (
-            <motion.div
-              initial={{ opacity: 0, y: 60, scale: 0.95 }}
+        <motion.div
+          initial={{ opacity: 0, y: 60, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
               style={{
@@ -199,8 +193,6 @@ export default function HeroSection() {
                 </div>
               </div>
             </motion.div>
-          )}
-        </AnimatePresence>
       </div>
     </section>
   )

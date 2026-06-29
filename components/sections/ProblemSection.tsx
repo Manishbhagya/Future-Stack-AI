@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 
 const oldWayItems = [
   'Scouring GitHub for AI infrastructure solutions',
@@ -67,12 +68,12 @@ export default function ProblemSection() {
               </div>
             </div>
 
-            <a href="/services" className="lp-btn-primary" style={{ marginTop: 40, display: 'inline-flex' }}>
+            <Link href="/services" className="lp-btn-primary" style={{ marginTop: 40, display: 'inline-flex' }}>
               See how it works
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
               </svg>
-            </a>
+            </Link>
           </div>
 
           <div style={{ maxWidth: 460, marginLeft: 'auto' }}>
