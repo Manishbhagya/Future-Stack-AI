@@ -4,16 +4,18 @@ import { motion } from 'framer-motion'
 
 const founders = [
   {
-    name: 'Pavan Kumar',
+    name: 'Manish Bhagyasagar',
     role: 'Co-Founder & CEO',
-    bio: 'Youngest intern at Cisco. Scaled Cliqk to $25K MRR. 28M views.',
-    initials: 'PK', color: '#3b82f6',
+    bio: 'Software Developer | Building AI-Powered FutureStack.',
+    initials: 'MB', color: '#3b82f6',
+    image: '/Profile/manish-bhagya .jpeg',
   },
   {
-    name: 'Pratham Patel',
-    role: 'Co-Founder & CTO',
-    bio: 'Built open-source app to 10K+ users in 6 months. Research @ DA-IICT.',
-    initials: 'PP', color: '#8b5cf6',
+    name: 'Manish Bhaktisagar',
+    role: 'Founder & CTO',
+    bio: 'Youngest Founder @ adtext.org • Helping Al chat apps make money without ruining the experience',
+    initials: 'MB', color: '#8b5cf6',
+    image: '/Profile/manish-bhakti.jpg',
   },
   {
     name: 'Clarissa Saputra',
@@ -47,15 +49,19 @@ export default function TeamSection() {
               transition={{ duration: 0.5, delay: i * 0.1 }}
             >
               <div style={{ position: 'relative', aspectRatio: '311/434', width: '100%', overflow: 'hidden', borderRadius: 30, background: '#14161c', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <div style={{
-                  width: 96, height: 96, borderRadius: '50%',
-                  background: `linear-gradient(135deg, ${f.color}, ${f.color}88)`,
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: 28, fontWeight: 700, color: '#fff',
-                  boxShadow: `0 0 40px ${f.color}33`,
-                }}>
-                  {f.initials}
-                </div>
+                {f.image ? (
+                  <div style={{ position: 'absolute', inset: 0, background: `url("${f.image}") center / cover` }} />
+                ) : (
+                  <div style={{
+                    width: 96, height: 96, borderRadius: '50%',
+                    background: `linear-gradient(135deg, ${f.color}, ${f.color}88)`,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontSize: 28, fontWeight: 700, color: '#fff',
+                    boxShadow: `0 0 40px ${f.color}33`,
+                  }}>
+                    {f.initials}
+                  </div>
+                )}
                 <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, padding: 20, background: 'linear-gradient(transparent, rgba(0,0,0,0.9))' }}>
                   <h3 style={{ fontFamily: 'var(--font-body)', fontSize: 16, lineHeight: 1.1, letterSpacing: '-0.04em', color: '#fff' }}>{f.name}</h3>
                   <div style={{ marginTop: 4, fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'rgba(255,255,255,0.5)' }}>{f.role}</div>
