@@ -1,8 +1,8 @@
-import { Outfit, DM_Sans } from 'next/font/google'
+import { Outfit, Geist, Instrument_Serif } from 'next/font/google'
 import './globals.css'
 import Providers from './providers'
 import Navbar from '../components/Navbar'
-import Footer from '../components/Footer'
+
 import ChatWidget from '../components/ChatWidget'
 import AccessibilityProWrapper from '../components/AccessibilityProWrapper'
 import CookieConsentBannerWrapper from '../components/CookieConsentBannerWrapper'
@@ -14,10 +14,18 @@ const outfit = Outfit({
   display: 'swap',
 })
 
-const dmSans = DM_Sans({
+const geist = Geist({
   subsets: ['latin'],
   variable: '--font-body',
   display: 'swap',
+})
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ['latin'],
+  variable: '--font-serif',
+  display: 'swap',
+  weight: '400',
+  style: ['normal', 'italic'],
 })
 
 export const metadata = {
@@ -27,12 +35,11 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${outfit.variable} ${dmSans.variable}`}>
+    <html lang="en" className={`${outfit.variable} ${geist.variable} ${instrumentSerif.variable}`}>
       <body>
         <Providers>
           <Navbar />
           <main><PageTransition>{children}</PageTransition></main>
-          <Footer />
           <ChatWidget />
           <AccessibilityProWrapper />
           <CookieConsentBannerWrapper />

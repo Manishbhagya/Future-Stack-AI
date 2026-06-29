@@ -1,0 +1,510 @@
+/* ============================================
+   Landing Page Design System
+   Inspired by tryclean.ai — premium, restraint,
+   photography + glass + typography
+   ============================================ */
+
+.landing-page {
+  /* ── tryclean-inspired HSL palette ── */
+  --lp-paper: 222 18% 7%;
+  --lp-paper-2: 222 15% 11%;
+  --lp-paper-edge: 220 12% 20%;
+  --lp-ink: 40 26% 94%;
+  --lp-ink-2: 220 10% 74%;
+  --lp-ink-soft: 220 8% 56%;
+  --lp-accent: 214 82% 50%;
+  --lp-accent-hover: 214 82% 58%;
+  --lp-accent-deep: 215 81% 41%;
+  --lp-accent-light: 209 100% 68%;
+  --lp-accent-soft: 208 64% 63%;
+
+  /* resolved colors */
+  --lp-bg: hsl(var(--lp-paper));
+  --lp-surface: hsl(var(--lp-paper-2));
+  --lp-elevated: hsl(222 10% 15%);
+  --lp-text: hsl(var(--lp-ink));
+  --lp-text-2: hsl(var(--lp-ink-2));
+  --lp-text-soft: hsl(var(--lp-ink-soft));
+  --lp-accent-solid: hsl(var(--lp-accent));
+  --lp-accent-solid-hover: hsl(var(--lp-accent-hover));
+  --lp-accent-solid-deep: hsl(var(--lp-accent-deep));
+
+  /* glass */
+  --lp-glass: hsl(222 12% 10% / 0.55);
+  --lp-glass-heavy: hsl(222 10% 8% / 0.70);
+  --lp-glass-border: hsl(0 0% 100% / 0.10);
+  --lp-glass-border-hover: hsl(0 0% 100% / 0.18);
+  --lp-glass-inset: inset 0 1px 0 0 hsl(0 0% 100% / 0.18);
+  --lp-glass-shadow: 0 20px 45px -18px hsl(0 0% 0% / 0.6);
+  --lp-accent-subtle: hsl(214 82% 50% / 0.15);
+
+  /* radii */
+  --lp-radius-sm: 20px;
+  --lp-radius-md: 24px;
+  --lp-radius-lg: 32px;
+  --lp-radius-xl: 40px;
+
+  /* layout */
+  --lp-max-w: 1400px;
+}
+
+/* Override globals.css vars when on landing page */
+.landing-page {
+  background: hsl(var(--lp-paper));
+  --bg-dark: hsl(var(--lp-paper));
+  --bg-dark-surface: hsl(var(--lp-paper-2));
+  --bg-section: hsl(var(--lp-paper));
+  --border-dark: hsl(0 0% 100% / 0.08);
+  --glass-bg: hsl(222 12% 10% / 0.55);
+  --glass-bg-hover: hsl(222 12% 10% / 0.70);
+  --glass-border: hsl(0 0% 100% / 0.10);
+  --glass-border-hover: hsl(0 0% 100% / 0.20);
+  --glass-blur: 24px;
+  --accent: hsl(var(--lp-accent));
+  --accent-hover: hsl(var(--lp-accent-hover));
+  --accent-subtle: hsl(214 82% 50% / 0.08);
+  --accent-subtle-dark: hsl(214 82% 50% / 0.06);
+  --accent-dark: hsl(214 82% 50% / 0.12);
+  --text-primary-dark: hsl(var(--lp-ink));
+  --text-secondary-dark: hsl(var(--lp-ink-2) / 0.55);
+  --text-tertiary-dark: hsl(var(--lp-ink-soft) / 0.35);
+  --text-light: hsl(var(--lp-ink-2) / 0.65);
+  --radius-md: 20px;
+  --radius-lg: 28px;
+  --radius-xl: 40px;
+}
+
+/* ============================================
+   Layout utilities
+   ============================================ */
+
+.lp-container {
+  margin: 0 auto;
+  width: 100%;
+  max-width: var(--lp-max-w);
+  padding: 0 24px;
+}
+
+/* ============================================
+   Glass card
+   ============================================ */
+
+.lp-glass {
+  background: var(--lp-glass);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid var(--lp-glass-border);
+  box-shadow: var(--lp-glass-inset), var(--lp-glass-shadow);
+  transition: border-color 0.3s, background 0.3s;
+}
+
+.lp-glass:hover {
+  border-color: var(--lp-glass-border-hover);
+  background: rgba(22, 22, 26, 0.70);
+}
+
+/* ============================================
+   Typography
+   tryclean uses Instrument Serif for display,
+   so we map display → Playfair Display (--font-serif)
+   ============================================ */
+
+.lp-display {
+  font-family: var(--font-serif);
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+}
+
+.lp-heading-xl {
+  font-family: var(--font-serif);
+  font-size: clamp(48px, 8vw, 104px);
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+}
+
+.lp-heading-lg {
+  font-family: var(--font-serif);
+  font-size: clamp(40px, 6vw, 88px);
+  line-height: 1.0;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+}
+
+.lp-heading-md {
+  font-family: var(--font-serif);
+  font-size: clamp(32px, 4vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  font-weight: 400;
+}
+
+.lp-heading-sm {
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 3.5vw, 44px);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+}
+
+.lp-heading-xs {
+  font-family: var(--font-serif);
+  font-size: clamp(24px, 3vw, 36px);
+  line-height: 1.1;
+  letter-spacing: -0.008em;
+  font-weight: 400;
+}
+
+.lp-italic {
+  font-style: italic;
+  font-family: var(--font-serif);
+}
+
+.lp-mono {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ============================================
+   Buttons
+   ============================================ */
+
+.lp-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 36px;
+  border-radius: 100px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+  background: var(--lp-accent-solid);
+  text-decoration: none;
+  transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 20px hsl(214 82% 50% / 0.25);
+}
+
+.lp-btn-primary:hover {
+  background: var(--lp-accent-solid-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px hsl(214 82% 50% / 0.35);
+}
+
+.lp-btn-primary svg {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lp-btn-primary:hover svg {
+  transform: translateX(3px) scale(1.1);
+}
+
+.lp-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 36px;
+  border-radius: 100px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.12);
+  text-decoration: none;
+  transition: background 0.3s, transform 0.3s;
+  cursor: pointer;
+}
+
+.lp-btn-ghost:hover {
+  background: rgba(255,255,255,0.14);
+  transform: translateY(-2px);
+}
+
+/* ============================================
+   Photography card
+   ============================================ */
+
+.lp-photo-card {
+  position: relative;
+  aspect-ratio: 532/767;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--lp-radius-xl);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s;
+}
+
+.lp-photo-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+}
+
+.lp-photo-card-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.lp-photo-card-bg > div {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lp-photo-card:hover .lp-photo-card-bg > div {
+  transform: scale(1.06);
+}
+
+.lp-photo-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(102,102,102,0) 30%, rgba(0,0,0,0.76) 100%);
+}
+
+.lp-photo-card-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 10% 11% 9%;
+}
+
+.lp-photo-card-glass {
+  height: 57%;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 24px;
+  padding: 8%;
+  background: rgba(18,18,20,0.40);
+  backdrop-filter: blur(10px) saturate(160%);
+  -webkit-backdrop-filter: blur(10px) saturate(160%);
+  border: 1px solid rgba(255,255,255,0.14);
+  box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.22), inset 0 -1px 2px 0 rgba(0,0,0,0.28), 0 24px 50px -16px rgba(0,0,0,0.5);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lp-photo-card:hover .lp-photo-card-glass {
+  transform: translateY(-4px);
+}
+
+.lp-photo-card-bottom {
+  margin-top: auto;
+  padding-top: 8%;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lp-photo-card:hover .lp-photo-card-bottom {
+  transform: translateY(-2px);
+}
+
+/* ============================================
+   Section spacing & bg alternation
+   ============================================ */
+
+.lp-section {
+  position: relative;
+  width: 100%;
+  background: var(--lp-bg);
+}
+
+.lp-section-alt {
+  background: hsl(var(--lp-paper-2));
+}
+
+.lp-section-padded {
+  padding: 100px 24px;
+}
+
+@media (min-width: 640px) {
+  .lp-section-padded {
+    padding: 120px 24px;
+  }
+}
+
+/* ============================================
+   Section divider with paper grain
+   ============================================ */
+
+.lp-paper-grain {
+  position: relative;
+}
+
+.lp-paper-grain::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.015;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+  pointer-events: none;
+}
+
+/* ============================================
+   Animation utilities
+   ============================================ */
+
+@keyframes lp-fade-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes lp-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.lp-glow-blue {
+  box-shadow: 0 0 30px hsl(214 82% 50% / 0.15);
+}
+
+.lp-gradient-text {
+  background: linear-gradient(135deg, hsl(var(--lp-accent-light)), hsl(var(--lp-accent-deep)));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================================
+   Scrollbar for dashboard mockup
+   ============================================ */
+
+.lp-dashboard-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.lp-dashboard-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.lp-dashboard-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.1);
+  border-radius: 4px;
+}
+
+/* ============================================
+   Responsive helpers
+   ============================================ */
+
+/* ============================================
+   tryclean-style data-reveal animation system
+   ============================================ */
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-reveal].revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-reveal][data-reveal-delay="100"] { transition-delay: 0.1s; }
+[data-reveal][data-reveal-delay="200"] { transition-delay: 0.2s; }
+[data-reveal][data-reveal-delay="300"] { transition-delay: 0.3s; }
+[data-reveal][data-reveal-delay="400"] { transition-delay: 0.4s; }
+[data-reveal][data-reveal-delay="500"] { transition-delay: 0.5s; }
+
+/* ============================================
+   Split text (placeholder for future use)
+   ============================================ */
+
+.lp-split-char,
+.lp-split-word {
+  overflow: hidden;
+  display: inline-block;
+}
+
+/* ============================================
+   Responsive — override inline grid layouts
+   ============================================ */
+
+@media (max-width: 1024px) {
+  .lp-lg-only { display: none !important; }
+  .lp-lg-grid-2 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .lp-md-only { display: none !important; }
+
+  /* ── Hero ── */
+
+  .lp-hero-section > div {
+    padding-top: 180px !important;
+  }
+
+  .landing-page .lp-hero-section h1 {
+    max-width: 320px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .landing-page .lp-hero-section p {
+    max-width: 320px !important;
+  }
+
+  /* CTA buttons — 48px height */
+  .landing-page .lp-btn-primary,
+  .landing-page .lp-btn-ghost {
+    height: 48px !important;
+    padding: 12px 28px !important;
+    font-size: 14px !important;
+  }
+
+  /* ── StoryCards: 3-col → 1-col ── */
+  .landing-page section .lp-container > div[style*="gridTemplateColumns"][style*="repeat(3"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ProblemSection / DashboardSection content grids: 2-col → 1-col */
+  .landing-page section .lp-container > div[style*="gridTemplateColumns"][style*="1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* SolutionsSection generated results: 2-col → 1-col */
+  .landing-page section .lp-glass div[style*="gridTemplateColumns"][style*="1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* HeroSection OS sidebar: hide */
+  .landing-page section > div > div[style*="gridTemplateColumns"][style*="200px"] > div:first-child {
+    display: none !important;
+  }
+  .landing-page section > div > div[style*="gridTemplateColumns"][style*="200px"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* HeroSection metric cards: 4-col → 2-col */
+  .landing-page section > div > div[style*="gridTemplateColumns"][style*="repeat(4"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* HeroSection activity + health: 2-col → 1-col */
+  .landing-page section > div > div[style*="gridTemplateColumns"][style*="1fr 1fr"][style*="16px"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Section padding */
+  .lp-section-padded {
+    padding: 60px 16px !important;
+  }
+
+  /* Mobile hero bg — adjust position */
+  .lp-hero-section > div > div > div[style*="hero-sky"] {
+    background-position: 50% 20% !important;
+    background-size: cover !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .landing-page section .lp-container > div[style*="gridTemplateColumns"][style*="repeat(4"] {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
