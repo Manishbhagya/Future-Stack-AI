@@ -1,3 +1,4 @@
+import { auth } from '@clerk/nextjs/server'
 import { streamText } from 'ai'
 import { createOpenAI } from '@ai-sdk/openai'
 import { logger } from '../../../lib/logger'
@@ -17,6 +18,11 @@ const MODEL = config.openrouter.model
 
 export async function POST(req) {
   const requestId = `req_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`
+
+  const { userId } = await auth()
+  if (!userId) {
+    return new Response(JSON.stringify({ title: 'UNAUTHORIZED', status: 401, detail: 'Authentication required' }), { status: 401 })
+  }
 
   let body
   try {
